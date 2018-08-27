@@ -1,14 +1,10 @@
 package com.spf.wealth.wealth;
 
-import com.spf.utils.es.ElasticSearchUtil;
-import org.elasticsearch.index.query.QueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author ShuPF
@@ -18,14 +14,18 @@ import java.util.Map;
 @RestController
 public class IndexController {
 
+    private static Logger logger = LoggerFactory.getLogger(IndexController.class);
+
     @RequestMapping("index")
     public ModelAndView index(){
+        logger.info("index");
         return new ModelAndView("index");
     }
 
 
     @RequestMapping("test")
     public String test(){
+        logger.info("test");
         return "hello word";
     }
 

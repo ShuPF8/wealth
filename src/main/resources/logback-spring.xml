@@ -36,26 +36,28 @@
     <!--输出到文件-->
     <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>log/logback.%d{yyyyMMdd}-%i.log</fileNamePattern>
+            <fileNamePattern>log/wealth.%d{yyyyMMdd}-%i.log</fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>10MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
             <maxHistory>30</maxHistory>
         </rollingPolicy>
         <encoder>
-            <pattern>%d{HH:mm:ss:SSS} %contextName {%thread} %-5level %logger{36} - %msg%n</pattern>
+            <pattern>%d{HH:mm:ss} %contextName {%thread} %-5level %logger{36} - %msg%n</pattern>
             <charset>utf8</charset>
         </encoder>
     </appender>
 
 
-    <root level="INFO">
+    <root level="info">
         <appender-ref ref="console" />
     </root>
 
     <!--不同包或类设置不同的级别及打印方法-->
     <logger name="com.spf" level="debug" additivity="false">
         <appender-ref ref="console" />
+    </logger>
+    <logger name="com.spf" level="info" additivity="false">
         <appender-ref ref="file" />
     </logger>
 
