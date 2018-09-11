@@ -86,7 +86,7 @@ public class ChongQingSs {
             hcount++;
             properties.setHcount(hcount);
             hflag = true;
-            logger.info(name + "后二已有 " + hcount + " 期不中，开奖信息" +kjqh+ " " + kjxn);
+            logger.info(name + "------------------------------ 后二已有 " + hcount + " 期不中");
             if (hcount == properties.gethMax()) {
                 hcount = 0;
                 MailSend.sendMail(name + "后二已有 " + hcount + " 期不中，开奖信息" +kjqh+ " " + kjxn + "!" + properties.getShtj() + "myNum：" + myNum);
@@ -99,7 +99,7 @@ public class ChongQingSs {
             qcount++;
             properties.setQcount(qcount);
             qflag = true;
-            logger.info(name + "前二已有 " + qcount + " 期不中，开奖信息" +kjqh+ " " + kjxn);
+            logger.info(name + "------------------------------ 前二已有 " + qcount + " 期不中");
             if (qcount == properties.getqMax()) {
                 qcount = 0;
                 MailSend.sendMail(name + "前二已有 " + qcount + " 期不中，开奖信息" +kjqh+ " " + kjxn + "!" + properties.getShtj() + "myNum：" + myNum);
@@ -120,7 +120,6 @@ public class ChongQingSs {
             properties.setQlz(qlz);
         }
 
-        logger.info("------------------------------ hcount {}, qcount {}:",hcount, qcount);
         logger.info("------------------------------ {}后二连中 : {} 次， {}前二连中 ：{} 次",name,hlz,name,qlz);
         return true;
     }
