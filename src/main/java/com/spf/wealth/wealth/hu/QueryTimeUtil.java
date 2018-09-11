@@ -21,7 +21,11 @@ public class QueryTimeUtil {
         while (true) {
             long start = System.currentTimeMillis();
             tengXunFf.login(properties);
-            long end = 0l;
+            long end = System.currentTimeMillis();
+            long sjc = (end - start) / 1000; //时间差 秒
+            if (sjc < 30) {
+                Thread.sleep((60 - sjc) / 2 * 1000);
+            }
             do {
                 end = System.currentTimeMillis();
             } while (end - start < 60000);

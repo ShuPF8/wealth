@@ -86,9 +86,9 @@ public class TengXunFf {
             hflag = true;
             logger.info("------------------------------ 腾讯分分后二已有 " + hcount + " 期不中");
             if (hcount == properties.gethMax()) {
+                MailSend.sendMail("腾讯分分后二已有 " + hcount + " 期不中，开奖信息" +kjqh+ " " + kjxn + "!" + properties.getShtj() + "myNum：" + myNum);
                 hcount = 0;
                 properties.setHcount(hcount);
-                MailSend.sendMail("腾讯分分后二已有 " + hcount + " 期不中，开奖信息" +kjqh+ " " + kjxn + "!" + properties.getShtj() + "myNum：" + myNum);
             }
         }
 
@@ -100,9 +100,9 @@ public class TengXunFf {
             qflag = true;
             logger.info("------------------------------ 腾讯分分前二已有 " + qcount + " 期不中");
             if (qcount == properties.getqMax()) {
+                MailSend.sendMail("腾讯分分前二已有 " + qcount + " 期不中，开奖信息" +kjqh+ " " + kjxn + "!" + properties.getShtj() + "myNum：" + myNum);
                 qcount = 0;
                 properties.setQcount(qcount);
-                MailSend.sendMail("腾讯分分前二已有 " + qcount + " 期不中，开奖信息" +kjqh+ " " + kjxn + "!" + properties.getShtj() + "myNum：" + myNum);
             }
         }
 

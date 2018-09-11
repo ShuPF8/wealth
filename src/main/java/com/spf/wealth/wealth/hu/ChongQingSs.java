@@ -68,7 +68,7 @@ public class ChongQingSs {
 
         int nextqh = properties.getNextqh();
         if (nextqh - qh == 1) { //是上一期
-            Thread.sleep(5000);
+            Thread.sleep(30000);
             return login(properties);
         }
 
@@ -88,9 +88,9 @@ public class ChongQingSs {
             hflag = true;
             logger.info(name + "------------------------------ 后二已有 " + hcount + " 期不中");
             if (hcount == properties.gethMax()) {
+                MailSend.sendMail(name + "后二已有 " + hcount + " 期不中，开奖信息" +kjqh+ " " + kjxn + "!" + properties.getShtj() + "myNum：" + myNum);
                 hcount = 0;
                 properties.setHcount(hcount);
-                MailSend.sendMail(name + "后二已有 " + hcount + " 期不中，开奖信息" +kjqh+ " " + kjxn + "!" + properties.getShtj() + "myNum：" + myNum);
             }
         }
 
@@ -102,9 +102,9 @@ public class ChongQingSs {
             qflag = true;
             logger.info(name + "------------------------------ 前二已有 " + qcount + " 期不中");
             if (qcount == properties.getqMax()) {
+                MailSend.sendMail(name + "前二已有 " + qcount + " 期不中，开奖信息" +kjqh+ " " + kjxn + "!" + properties.getShtj() + "myNum：" + myNum);
                 qcount = 0;
                 properties.setQcount(qcount);
-                MailSend.sendMail(name + "前二已有 " + qcount + " 期不中，开奖信息" +kjqh+ " " + kjxn + "!" + properties.getShtj() + "myNum：" + myNum);
             }
         }
 
