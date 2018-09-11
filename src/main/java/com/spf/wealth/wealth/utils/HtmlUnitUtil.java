@@ -9,10 +9,14 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 
+import com.gargoylesoftware.htmlunit.util.Cookie;
+import org.apache.http.client.CookieStore;
+import org.apache.http.impl.cookie.BasicClientCookie;
 import org.apache.logging.log4j.Logger;
 
 import com.gargoylesoftware.htmlunit.DefaultCredentialsProvider;
@@ -228,13 +232,34 @@ public class HtmlUnitUtil {
      * @param name
      * @throws IOException
      */
-    public void saveImage(HtmlImage img, String name) throws IOException {
+    public static void saveImage(HtmlImage img, String name) throws IOException {
         ImageReader imageReader = img.getImageReader();
         BufferedImage bufferedImage = imageReader.read(0);
         BufferedImage inputbig = new BufferedImage(160, 60, BufferedImage.TYPE_INT_BGR);
         inputbig.getGraphics().drawImage(bufferedImage, 0, 0, 160, 60, null); //画图
         File file2 = new File("D:\\Backup\\Desktop\\" + name + ".png");
         ImageIO.write(inputbig, "png", file2);
+    }
+
+    public static void setClientCookie(WebClient webClient, CookieStore cookieStore){
+        Set<Cookie> cookieSet = webClient.getCookieManager().getCookies();
+        for (com.gargoylesoftware.htmlunit.util.Cookie c : cookieSet) {
+            BasicClientCookie cookie = new BasicClientCookie(c.getName(), c.getValue());
+            cookie.setDomain(c.getDomain());   //设置范围
+            cookie.setPath(c.getPath());
+            cookie.setExpiryDate(c.getExpires());
+            cookieStore.addCookie(cookie);
+        }
+    }
+
+    public static void setWebClientCookie(WebClient webClient, CookieStore cookieStore) {
+        List<org.apache.http.cookie.Cookie> cookies =  cookieStore.getCookies();
+        webClient.getCookieManager().setCookiesEnabled(true);
+        for (org.apache.http.cookie.Cookie c : cookies) {
+            com.gargoylesoftware.htmlunit.util.Cookie webCookie = new
+                    com.gargoylesoftware.htmlunit.util.Cookie(c.getDomain(), c.getName(), c.getValue());
+            webClient.getCookieManager().addCookie(webCookie);
+        }
     }
 
 }
