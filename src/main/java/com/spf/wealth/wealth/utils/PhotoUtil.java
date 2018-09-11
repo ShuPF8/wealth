@@ -2,6 +2,7 @@ package com.spf.wealth.wealth.utils;
 
 import sun.misc.BASE64Decoder;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 
@@ -20,7 +21,16 @@ public class PhotoUtil {
                     b[i] += 256;
                 }
             }
-            OutputStream out = new FileOutputStream("E:\\GitHub\\wealth\\src\\main\\resources\\photo\\"+path);
+
+            File file = new File("");
+            String filePath =file.getCanonicalPath() + "\\src\\main\\resources\\photo\\";
+            file = new File(filePath);
+
+            if (!file.exists()) {
+                file.mkdir();
+            }
+
+            OutputStream out = new FileOutputStream(filePath + path);
             out.write(b);
             out.flush();
             out.close();
