@@ -17,27 +17,28 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 腾讯分分彩
+ * 重庆时时彩
  */
-public class TengXunFf {
-    private Logger logger = LogManager.getLogger(TengXunFf.class);
+public class ChongQingSs {
+    private Logger logger = LogManager.getLogger(ChongQingSs.class);
 
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
 
     private CloseableHttpClient client = null;
 
-    public TengXunFf() {
+    public ChongQingSs() {
         client = HttpUtil.getClient();
         HttpUriRequest request = null;
         String url = null, data = null;
 
-        url = "http://pay4.hbcchy.com/lotterytrend/chart/16";
+        url = "http://pay4.hbcchy.com/lotterytrend/chart/1";
         request = new HttpGet(url);
         try {
             HttpUtil.execute(client, request, logger);
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
     public boolean login(Properties properties) throws Exception {
@@ -47,7 +48,7 @@ public class TengXunFf {
         String url = null, data = null;
 
         Map<String, Object> map = new HashMap<>();
-        map.put("id","16");
+        map.put("id","1");
         map.put("pnum","30");
 
         url = "http://pay4.hbcchy.com/lotterytrend/getsscchart";
@@ -77,6 +78,7 @@ public class TengXunFf {
 
         logger.info("------------------------------ 开奖信息为:" + kjqh + " " + kjxn);
 
+        String name = properties.getName();
         int hcount = properties.getHcount();
         String myNum = properties.getMyNum();
         if (!myNum.contains(h2)) {
@@ -84,10 +86,10 @@ public class TengXunFf {
             hcount++;
             properties.setHcount(hcount);
             hflag = true;
-            logger.info("腾讯分分后二已有 " + hcount + " 期不中，开奖信息" +kjqh+ " " + kjxn);
+            logger.info(name + "后二已有 " + hcount + " 期不中，开奖信息" +kjqh+ " " + kjxn);
             if (hcount == properties.gethMax()) {
                 hcount = 0;
-                MailSend.sendMail("腾讯分分后二已有 " + hcount + " 期不中，开奖信息" +kjqh+ " " + kjxn + "!" + properties.getShtj() + "myNum：" + myNum);
+                MailSend.sendMail(name + "后二已有 " + hcount + " 期不中，开奖信息" +kjqh+ " " + kjxn + "!" + properties.getShtj() + "myNum：" + myNum);
             }
         }
 
@@ -97,10 +99,10 @@ public class TengXunFf {
             qcount++;
             properties.setQcount(qcount);
             qflag = true;
-            logger.info("腾讯分分前二已有 " + qcount + " 期不中，开奖信息" +kjqh+ " " + kjxn);
+            logger.info(name + "前二已有 " + qcount + " 期不中，开奖信息" +kjqh+ " " + kjxn);
             if (qcount == properties.getqMax()) {
                 qcount = 0;
-                MailSend.sendMail("腾讯分分前二已有 " + qcount + " 期不中，开奖信息" +kjqh+ " " + kjxn + "!" + properties.getShtj() + "myNum：" + myNum);
+                MailSend.sendMail(name + "前二已有 " + qcount + " 期不中，开奖信息" +kjqh+ " " + kjxn + "!" + properties.getShtj() + "myNum：" + myNum);
             }
         }
 
@@ -119,7 +121,7 @@ public class TengXunFf {
         }
 
         logger.info("------------------------------ hcount {}, qcount {}:",hcount, qcount);
-        logger.info("------------------------------ 腾讯分分后二连中 : {} 次， 腾讯分分前二连中 ：{} 次",hlz,qlz);
+        logger.info("------------------------------ {}后二连中 : {} 次， {}前二连中 ：{} 次",name,hlz,name,qlz);
         return true;
     }
 

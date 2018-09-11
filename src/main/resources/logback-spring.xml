@@ -61,6 +61,7 @@
         <appender-ref ref="file" />
     </logger>
 
+    <!-- 屏蔽http日志 -->
     <logger name="org.apache.http" level="OFF" additivity="false" >
         <appender-ref ref="console" />
     </logger>
