@@ -110,14 +110,14 @@ public class ChongQingSs {
 
         int hlz = properties.getHlz();
         if (!hflag) {
-            hcount = 0;
+            properties.setHcount(0);
             hlz++;
             properties.setHlz(hlz);
         }
 
         int qlz = properties.getQlz();
         if (!qflag) {
-            qcount = 0;
+            properties.setQcount(0);
             qlz++;
             properties.setQlz(qlz);
         }
