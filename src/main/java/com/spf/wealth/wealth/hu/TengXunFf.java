@@ -10,8 +10,9 @@ import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.Test;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,25 +20,43 @@ import java.util.Map;
  * 腾讯分分彩
  */
 public class TengXunFf {
-    public String myNum = "00,02,03,04,05,06,07,09,11,13,14,15,16,18,20,22,24,25,27,29,30,31,33,36,38,39,40,41,42,47,48,49,50,51,52,57,58,59,60,61,63,66,68,69,70,72,74,75,77,79,81,83,84,85,86,88,90,92,93,94,95,96,97,99";
+    public String myNum = "02,03,04,05,06,07,08,09,13,14,15,16,17,19,20,24,25,26,28,30,31,35,37,39,40,41,42,46,47,48,49,50,51,52,53,57,58,59,60,61,62,64,68,69,70,71,73,75,79,80,82,84,85,86,91,93,94,95,96,97";
 
     private Logger logger = LogManager.getLogger(TengXunFf.class);
 
-    private String _qh = "0";
+    private Integer nextqh = 744; //开奖期号
 
-    private int hcount = 0;
+    private int hcount = 0; //后二不中次数
 
-    private int qcount = 0;
+    private int hlz = 0; //后二二连中次数
 
-    CloseableHttpClient client = HttpUtil.getClient();
+    private int qcount = 0; //前二不中次数
 
-    public boolean login() throws Exception {
+    private int qlz = 0; //前二连中次数
+
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
+
+    private CloseableHttpClient client = null;
+
+    public TengXunFf() {
+        client = HttpUtil.getClient();
         HttpUriRequest request = null;
         String url = null, data = null;
 
         url = "http://pay4.hbcchy.com/lotterytrend/chart/16";
         request = new HttpGet(url);
-        data = HttpUtil.execute(client, request, logger);
+        try {
+            HttpUtil.execute(client, request, logger);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public boolean login() throws Exception {
+        logger.info("--------------------------- 开始查询 {} ---------------------------", sdf.format(new Date()));
+        boolean hflag = false, qflag = false;
+        HttpUriRequest request = null;
+        String url = null, data = null;
 
         Map<String, Object> map = new HashMap<>();
         map.put("id","16");
@@ -54,39 +73,56 @@ public class TengXunFf {
 
         JSONObject json = JSON.parseObject(data);
         JSONArray datas = json.getJSONArray("data");
-        String qh = datas.getJSONArray(datas.size() - 1).getString(0);
+        String kjqh = datas.getJSONArray(datas.size() - 1).getString(0);
+        Integer qh = Integer.valueOf(kjqh.split("-")[1]);
         String kjxn = datas.getJSONArray(datas.size() - 1).getString(1);
 
-        if (qh == _qh) {
+        if (nextqh - qh == 1) { //是上一期
             Thread.sleep(5000);
             return login();
         }
 
-        _qh = qh;
+        nextqh = qh + 1;
         String q2 = kjxn.substring(0,2);
         String h2 = kjxn.substring(3,kjxn.length());
 
-        logger.info("开奖信息为:{} {}",qh, kjxn);
+        logger.info("------------------------------ 开奖信息为:" + kjqh + " " + kjxn);
 
         if (!myNum.contains(h2)) {
+            hlz = 0;
             hcount++;
-            MailSend.sendMail("腾讯分分已有 " + hcount + " 期不中，开奖信息" +qh+ " " + kjxn);
+            hflag = true;
+            logger.info("腾讯分分后二已有 " + hcount + " 期不中，开奖信息" +kjqh+ " " + kjxn);
+            if (hcount == 6) {
+                hcount = 0;
+                MailSend.sendMail("腾讯分分后二已有 " + hcount + " 期不中，开奖信息" +kjqh+ " " + kjxn);
+            }
         }
 
         if (!myNum.contains(q2)) {
+            qlz = 0;
             qcount++;
-            MailSend.sendMail("腾讯分分已有 " + qcount + " 期不中，开奖信息" +qh+ " " + kjxn);
+            qflag = true;
+            logger.info("腾讯分分前二已有 " + qcount + " 期不中，开奖信息" +kjqh+ " " + kjxn);
+            if (qcount == 6) {
+                qcount = 0;
+                MailSend.sendMail("腾讯分分前二已有 " + qcount + " 期不中，开奖信息" +kjqh+ " " + kjxn);
+            }
         }
 
+        if (!hflag) {
+            hcount = 0;
+            hlz++;
+        }
+
+        if (!qflag) {
+            qcount = 0;
+            qlz++;
+        }
+
+        logger.info("------------------------------ hcount {}, qcount {}:",hcount, qcount);
+        logger.info("------------------------------ 后二连中 : {} 次， 前二连中 ：{} 次",hlz,qlz);
         return true;
-    }
-
-    @Test
-    public void test() throws Exception {
-        while (true) {
-            login();
-            Thread.sleep(60000);
-        }
     }
 
 }

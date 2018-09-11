@@ -54,12 +54,15 @@
     </root>
 
     <!--不同包或类设置不同的级别及打印方法-->
-    <logger name="com.spf" level="debug" additivity="false">
+    <logger name="com.spf" level="info" additivity="false">
         <appender-ref ref="console" />
     </logger>
     <logger name="com.spf" level="info" additivity="false">
         <appender-ref ref="file" />
     </logger>
+
+    <logger name="org.apache" level="OFF" />
+    <logger name="org.apache.http.wire" level="OFF" />
 
     <!--日志异步到数据库 -->
     <!-- <appender name="DB" class="ch.qos.logback.classic.db.DBAppender">
