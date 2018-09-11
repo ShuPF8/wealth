@@ -22,9 +22,9 @@ public class TengXunFfTest {
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
 
     public void init() {
-        tengXunFf = new TengXunFf();
+        String myNum = "02,03,04,05,06,07,08,09,13,14,15,16,17,19,20,24,25,26,28,30,31,35,37,39,40,41,42,46,47,48,49,50,51,52,53,57,58,59,60,61,62,64,68,69,70,71,73,75,79,80,82,84,85,86,91,93,94,95,96,97";
+        tengXunFf = new TengXunFf(myNum,884,5,5);
     }
-
 
     @Test
     public void execute() throws Exception {

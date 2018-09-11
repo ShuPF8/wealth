@@ -30,15 +30,28 @@ public class TengXunFf {
 
     private int hlz = 0; //后二二连中次数
 
+    private int hMax; //后二最大不中次数
+
     private int qcount = 0; //前二不中次数
 
     private int qlz = 0; //前二连中次数
+
+    private int qMax; //前二最大不中次数
 
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
 
     private CloseableHttpClient client = null;
 
     public TengXunFf() {
+        super();
+    }
+
+    public TengXunFf(String myNum, Integer nextqh, int hMax, int qMax) {
+        this.myNum = myNum;
+        this.nextqh = nextqh;
+        this.hMax = hMax;
+        this.qMax = qMax;
+
         client = HttpUtil.getClient();
         HttpUriRequest request = null;
         String url = null, data = null;
@@ -50,6 +63,7 @@ public class TengXunFf {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
     public boolean login() throws Exception {
@@ -93,7 +107,7 @@ public class TengXunFf {
             hcount++;
             hflag = true;
             logger.info("腾讯分分后二已有 " + hcount + " 期不中，开奖信息" +kjqh+ " " + kjxn);
-            if (hcount == 6) {
+            if (hcount == hMax) {
                 hcount = 0;
                 MailSend.sendMail("腾讯分分后二已有 " + hcount + " 期不中，开奖信息" +kjqh+ " " + kjxn);
             }
@@ -104,7 +118,7 @@ public class TengXunFf {
             qcount++;
             qflag = true;
             logger.info("腾讯分分前二已有 " + qcount + " 期不中，开奖信息" +kjqh+ " " + kjxn);
-            if (qcount == 6) {
+            if (qcount == qMax) {
                 qcount = 0;
                 MailSend.sendMail("腾讯分分前二已有 " + qcount + " 期不中，开奖信息" +kjqh+ " " + kjxn);
             }
