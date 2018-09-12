@@ -78,6 +78,7 @@ public class ChongQingSs {
 
         logger.info("------------------------------ 开奖信息为:" + kjqh + " " + kjxn);
 
+        String title = properties.getShtj();
         String name = properties.getName();
         int hcount = properties.getHcount();
         String myNum = properties.getMyNum();
@@ -88,7 +89,7 @@ public class ChongQingSs {
             hflag = true;
             logger.info(name + "------------------------------ 后二已有 " + hcount + " 期不中");
             if (hcount == properties.gethMax()) {
-                MailSend.sendMail(name + "后二已有 " + hcount + " 期不中，开奖信息" +kjqh+ " " + kjxn + "!" + properties.getShtj() + "myNum：" + myNum);
+                MailSend.sendMail(title + "-" + qh, name + "后二已有 " + hcount + " 期不中，开奖信息" +kjqh+ " " + kjxn + "! 投注号码：" + myNum);
             }
         }
 
@@ -100,7 +101,7 @@ public class ChongQingSs {
             qflag = true;
             logger.info(name + "------------------------------ 前二已有 " + qcount + " 期不中");
             if (qcount == properties.getqMax()) {
-                MailSend.sendMail(name + "前二已有 " + qcount + " 期不中，开奖信息" +kjqh+ " " + kjxn + "!" + properties.getShtj() + "myNum：" + myNum);
+                MailSend.sendMail(title + "-" + qh, name + "前二已有 " + qcount + " 期不中，开奖信息" +kjqh+ " " + kjxn + "! 投注号码：" + myNum);
             }
         }
 
