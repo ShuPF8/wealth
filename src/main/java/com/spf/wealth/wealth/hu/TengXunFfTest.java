@@ -41,6 +41,9 @@ public class TengXunFfTest {
     @Test
     public void execute() throws Exception {
         int nextqh = 1332;
+        if (nextqh == 1441) {
+            nextqh = 1;
+        }
         Properties sevenProperties = new Properties("腾讯分分", SevenNum,nextqh,5,5,"和7,11");
         Properties nineProperties = new Properties("腾讯分分", NineNum,nextqh,5,5,"和9,11");
         Properties tenProperties = new Properties("腾讯分分", TenNum,nextqh,5,5,"和8,10");
