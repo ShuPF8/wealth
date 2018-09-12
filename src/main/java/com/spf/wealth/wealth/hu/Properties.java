@@ -18,11 +18,19 @@ public class Properties {
 
     private int hMax; //后二最大不中次数
 
+    private int hMaxlzCount = 0; //后二最大连中统计
+
+    private int hMaxbzCount = 0; //后二最大不中统计
+
     private int qcount = 0; //前二不中次数
 
     private int qlz = 0; //前二连中次数
 
     private int qMax; //前二最大不中次数
+
+    private int qMaxlzCount = 0; //前二最大连中统计
+
+    private int qMaxbzCount = 0; //前二最大不中统计
 
     private String shtj = ""; //杀号条件
 
@@ -33,6 +41,38 @@ public class Properties {
         this.hMax = hMax;
         this.qMax = qMax;
         this.shtj = shtj;
+    }
+
+    public int gethMaxlzCount() {
+        return hMaxlzCount;
+    }
+
+    public void sethMaxlzCount(int hMaxlzCount) {
+        this.hMaxlzCount = hMaxlzCount;
+    }
+
+    public int gethMaxbzCount() {
+        return hMaxbzCount;
+    }
+
+    public void sethMaxbzCount(int hMaxbzCount) {
+        this.hMaxbzCount = hMaxbzCount;
+    }
+
+    public int getqMaxlzCount() {
+        return qMaxlzCount;
+    }
+
+    public void setqMaxlzCount(int qMaxlzCount) {
+        this.qMaxlzCount = qMaxlzCount;
+    }
+
+    public int getqMaxbzCount() {
+        return qMaxbzCount;
+    }
+
+    public void setqMaxbzCount(int qMaxbzCount) {
+        this.qMaxbzCount = qMaxbzCount;
     }
 
     public String getMyNum() {

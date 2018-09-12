@@ -87,6 +87,9 @@ public class ChongQingSs {
             hcount++;
             properties.setHcount(hcount);
             hflag = true;
+            if (properties.gethMaxbzCount() < hcount) {
+                properties.sethMaxbzCount(hcount); //记录最大不中次数
+            }
             logger.info(name + "------------------------------ 后二已有 " + hcount + " 期不中");
             if (hcount == properties.gethMax()) {
                 MailSend.sendMail(title + "-" + qh, name + "后二已有 " + hcount + " 期不中，开奖信息" +kjqh+ " " + kjxn + "! 投注号码：" + myNum);
@@ -99,6 +102,9 @@ public class ChongQingSs {
             qcount++;
             properties.setQcount(qcount);
             qflag = true;
+            if (properties.getqMaxbzCount() < qcount) {
+                properties.setqMaxbzCount(qcount); //记录最大不中次数
+            }
             logger.info(name + "------------------------------ 前二已有 " + qcount + " 期不中");
             if (qcount == properties.getqMax()) {
                 MailSend.sendMail(title + "-" + qh, name + "前二已有 " + qcount + " 期不中，开奖信息" +kjqh+ " " + kjxn + "! 投注号码：" + myNum);
@@ -110,6 +116,9 @@ public class ChongQingSs {
             properties.setHcount(0);
             hlz++;
             properties.setHlz(hlz);
+            if (properties.gethMaxlzCount() < hlz) {
+                properties.sethMaxlzCount(hlz); //记录最大中次数
+            }
         }
 
         int qlz = properties.getQlz();
@@ -117,6 +126,9 @@ public class ChongQingSs {
             properties.setQcount(0);
             qlz++;
             properties.setQlz(qlz);
+            if (properties.getqMaxlzCount() < qlz) {
+                properties.setqMaxlzCount(qlz); //记录最大中次数
+            }
         }
 
         logger.info("------------------------------ {}后二连中 : {} 次， {}前二连中 ：{} 次",name,hlz,name,qlz);

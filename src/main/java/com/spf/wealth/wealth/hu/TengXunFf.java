@@ -85,6 +85,9 @@ public class TengXunFf {
             hcount++;
             properties.setHcount(hcount);
             hflag = true;
+            if (properties.gethMaxbzCount() < hcount) {
+                properties.sethMaxbzCount(hcount); //记录最大不中次数
+            }
             logger.info("------------------------------ 腾讯分分后二已有 " + hcount + " 期不中");
             if (hcount == properties.gethMax()) {
                 MailSend.sendMail(title + "-" + qh,"腾讯分分后二已有 " + hcount + " 期不中，开奖信息" +kjqh+ " " + kjxn + "! 投注号码：" + myNum);
@@ -96,6 +99,9 @@ public class TengXunFf {
             properties.setQlz(0);
             qcount++;
             properties.setQcount(qcount);
+            if (properties.getqMaxbzCount() < qcount) {
+                properties.setqMaxbzCount(qcount); //记录最大不中次数
+            }
             qflag = true;
             logger.info("------------------------------ 腾讯分分前二已有 " + qcount + " 期不中");
             if (qcount == properties.getqMax()) {
@@ -108,6 +114,9 @@ public class TengXunFf {
             properties.setHcount(0);
             hlz++;
             properties.setHlz(hlz);
+            if (properties.gethMaxlzCount() < hlz) {
+                properties.sethMaxlzCount(hlz); //记录最大中次数
+            }
         }
 
         int qlz = properties.getQlz();
@@ -115,6 +124,9 @@ public class TengXunFf {
             properties.setQcount(0);
             qlz++;
             properties.setQlz(qlz);
+            if (properties.getqMaxlzCount() < qlz) {
+                properties.setqMaxlzCount(qlz); //记录最大中次数
+            }
         }
 
         logger.info("------------------------------ 腾讯分分后二连中 : {} 次， 腾讯分分前二连中 ：{} 次",hlz,qlz);
