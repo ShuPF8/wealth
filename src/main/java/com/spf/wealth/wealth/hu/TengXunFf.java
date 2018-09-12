@@ -40,9 +40,8 @@ public class TengXunFf {
         }
     }
 
-    public boolean login(Properties properties) throws Exception {
-        logger.info("--------------------------- 开始查询 {} ---------------------------", sdf.format(new Date()));
-        boolean hflag = false, qflag = false;
+    public JSONObject login(int nextqh) throws Exception {
+        logger.info("--------------------------- 开始查询 [第 {} 期] {} ---------------------------", nextqh, sdf.format(new Date()));
         HttpUriRequest request = null;
         String url = null, data = null;
 
@@ -59,7 +58,11 @@ public class TengXunFf {
         request.addHeader("Host","pay4.hbcchy.com");
         data = HttpUtil.execute(client, request, logger);
 
-        JSONObject json = JSON.parseObject(data);
+        return JSON.parseObject(data);
+    }
+
+    public boolean execute(JSONObject json, Properties properties, int count) throws Exception {
+        boolean hflag = false, qflag = false;
         JSONArray datas = json.getJSONArray("data");
         String kjqh = datas.getJSONArray(datas.size() - 1).getString(0);
         Integer qh = Integer.valueOf(kjqh.split("-")[1]);
@@ -68,14 +71,17 @@ public class TengXunFf {
         int nextqh = properties.getNextqh();
         if (nextqh - qh == 1) { //是上一期
             Thread.sleep(5000);
-            return login(properties);
+            json = login(nextqh); //重新查询
+            return execute(json, properties,count);
         }
 
         properties.setNextqh(qh + 1);
         String q2 = kjxn.substring(0,2);
         String h2 = kjxn.substring(3,kjxn.length());
 
-        logger.info("------------------------------ 开奖信息为:" + kjqh + " " + kjxn);
+        if (count == 1) {
+            logger.info("------------------------------ 开奖信息为:" + kjqh + " [" + kjxn + "]\n");
+        }
 
         String title = properties.getShtj();
         int hcount = properties.getHcount();
@@ -88,7 +94,7 @@ public class TengXunFf {
             if (properties.gethMaxbzCount() < hcount) {
                 properties.sethMaxbzCount(hcount); //记录最大不中次数
             }
-            logger.info("------------------------------ 腾讯分分后二已有 " + hcount + " 期不中");
+            logger.info("------------------------------ 腾讯分分后二 ["+properties.getShtj()+"] 已有 [ " + hcount + " ] 期不中");
             if (hcount == properties.gethMax()) {
                 MailSend.sendMail(title + "-" + qh,"腾讯分分后二已有 " + hcount + " 期不中，开奖信息" +kjqh+ " " + kjxn + "! 投注号码：" + myNum);
             }
@@ -103,7 +109,7 @@ public class TengXunFf {
                 properties.setqMaxbzCount(qcount); //记录最大不中次数
             }
             qflag = true;
-            logger.info("------------------------------ 腾讯分分前二已有 " + qcount + " 期不中");
+            logger.info("------------------------------ 腾讯分分前二 [" + properties.getShtj() + "] 已有 [ " + qcount + " ] 期不中");
             if (qcount == properties.getqMax()) {
                 MailSend.sendMail(title + "-" + qh, "腾讯分分前二已有 " + qcount + " 期不中，开奖信息" +kjqh+ " " + kjxn + "! 投注号码：" + myNum);
             }
@@ -129,8 +135,8 @@ public class TengXunFf {
             }
         }
 
-        logger.info("------------------------------ 腾讯分分后二连中 : {} 次， 腾讯分分前二连中 ：{} 次",hlz,qlz);
-        logger.info("------------------------------------------------------------ 执行结束 {}---------------------------------------------\n", sdf.format(new Date()));
+        //logger.info("------------------------------ 腾讯分分后二连中 : {} 次， 腾讯分分前二连中 ：{} 次",hlz,qlz);
+        //logger.info("\n------------------------------------------------------------ 执行结束 {}---------------------------------------------\n", sdf.format(new Date()));
         return true;
     }
 

@@ -25,8 +25,6 @@ public class Write {
     public static void write(String content, String path, boolean flag) {
         FileOutputStream outSTr = null;
         BufferedOutputStream Buff = null;
-
-        int count = 1000;//写文件行数
         try {
             //经过测试：ufferedOutputStream执行耗时:1,1，1 毫秒
             outSTr = new FileOutputStream(new File(path), flag);
@@ -34,9 +32,8 @@ public class Write {
             Buff.write((content+ "\n\t").getBytes());
             Buff.flush();
             Buff.close();
-
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         } finally {
             try {
                 Buff.close();
