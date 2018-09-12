@@ -116,4 +116,11 @@ public class TengXunFfTest {
         } while (nextqh - qh != 0);
 
     }
+
+    @Test
+    public void test() throws Exception {
+        String[] toMails = new String[]{"517292069@qq.com","1129711788@qq.com","1215852831@qq.com"};
+        MailSend.sendMail("多邮箱测试","500万", toMails);
+    }
+
 }

@@ -24,6 +24,8 @@ public class TengXunFf {
 
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
 
+    private String[] toMails = new String[]{"517292069@qq.com","1129711788@qq.com"};
+
     private CloseableHttpClient client = null;
 
     public TengXunFf() {
@@ -96,7 +98,7 @@ public class TengXunFf {
             }
             logger.info("------------------------------ 腾讯分分后二 ["+properties.getShtj()+"] 已有 [ " + hcount + " ] 期不中");
             if (hcount == properties.gethMax()) {
-                MailSend.sendMail(title + "-" + qh,"腾讯分分后二["+properties.getShtj()+"]已有 " + hcount + " 期不中，开奖信息" +kjqh+ " " + kjxn + "! 投注号码：" + myNum);
+                MailSend.sendMail(title + "-" + qh,"腾讯分分后二["+properties.getShtj()+"]已有 " + hcount + " 期不中，开奖信息" +kjqh+ " " + kjxn + "! 投注号码：" + myNum, toMails);
             }
         }
 
@@ -111,7 +113,7 @@ public class TengXunFf {
             qflag = true;
             logger.info("------------------------------ 腾讯分分前二 [" + properties.getShtj() + "] 已有 [ " + qcount + " ] 期不中");
             if (qcount == properties.getqMax()) {
-                MailSend.sendMail(title + "-" + qh, "腾讯分分前二["+properties.getShtj()+"]已有 " + qcount + " 期不中，开奖信息" +kjqh+ " " + kjxn + "! 投注号码：" + myNum);
+                MailSend.sendMail(title + "-" + qh, "腾讯分分前二["+properties.getShtj()+"]已有 " + qcount + " 期不中，开奖信息" +kjqh+ " " + kjxn + "! 投注号码：" + myNum, toMails);
             }
         }
 
