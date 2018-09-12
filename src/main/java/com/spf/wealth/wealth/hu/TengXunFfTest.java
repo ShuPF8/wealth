@@ -40,7 +40,7 @@ public class TengXunFfTest {
 
     @Test
     public void execute() throws Exception {
-        int nextqh = 1024;
+        int nextqh = 1332;
         Properties sevenProperties = new Properties("腾讯分分", SevenNum,nextqh,5,5,"和7,11");
         Properties nineProperties = new Properties("腾讯分分", NineNum,nextqh,5,5,"和9,11");
         Properties tenProperties = new Properties("腾讯分分", TenNum,nextqh,5,5,"和8,10");
@@ -115,12 +115,6 @@ public class TengXunFfTest {
             qh = Integer.valueOf(kjqh.split("-")[1]);
         } while (nextqh - qh != 0);
 
-    }
-
-    @Test
-    public void test() throws Exception {
-        String[] toMails = new String[]{"517292069@qq.com","1129711788@qq.com","1215852831@qq.com"};
-        MailSend.sendMail("多邮箱测试","500万", toMails);
     }
 
 }

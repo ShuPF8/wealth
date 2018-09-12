@@ -98,7 +98,7 @@ public class TengXunFf {
             }
             logger.info("------------------------------ 腾讯分分后二 ["+properties.getShtj()+"] 已有 [ " + hcount + " ] 期不中");
             if (hcount == properties.gethMax()) {
-                MailSend.sendMail(title + "-" + qh,"腾讯分分后二["+properties.getShtj()+"]已有 " + hcount + " 期不中，开奖信息" +kjqh+ " " + kjxn + "! 投注号码：" + myNum, toMails);
+                MailSend.sendMail(title + "-" + qh,"后二","腾讯分分后二["+properties.getShtj()+"]已有 " + hcount + " 期不中，开奖信息" +kjqh+ " " + kjxn + "! 投注号码：" + myNum, toMails);
             }
         }
 
@@ -113,7 +113,7 @@ public class TengXunFf {
             qflag = true;
             logger.info("------------------------------ 腾讯分分前二 [" + properties.getShtj() + "] 已有 [ " + qcount + " ] 期不中");
             if (qcount == properties.getqMax()) {
-                MailSend.sendMail(title + "-" + qh, "腾讯分分前二["+properties.getShtj()+"]已有 " + qcount + " 期不中，开奖信息" +kjqh+ " " + kjxn + "! 投注号码：" + myNum, toMails);
+                MailSend.sendMail(title + "-" + qh, "前二","腾讯分分前二["+properties.getShtj()+"]已有 " + qcount + " 期不中，开奖信息" +kjqh+ " " + kjxn + "! 投注号码：" + myNum, toMails);
             }
         }
 
