@@ -85,7 +85,7 @@ public class LotteryCore {
             logger.info("------------------------------ "+ properties.getName() +"开奖信息为:" + kjqh + " [" + kjxn + "]\n");
         }
 
-        String title = properties.getShtj();
+        String title = properties.getName() +"["+ properties.getShtj() + "]";
         int hcount = properties.getHcount();
         String myNum = properties.getMyNum();
         if (!myNum.contains(h2)) {
@@ -98,7 +98,7 @@ public class LotteryCore {
             }
             logger.info("------------------------------ "+ properties.getName() +"后二 ["+properties.getShtj()+"] 已有 [ " + hcount + " ] 期不中");
             if (hcount == properties.gethMax()) {
-                MailSend.sendMail(title + "-" + qh,"后二", properties.getName() +"后二["+properties.getShtj()+"]已有 " + hcount + " 期不中，开奖信息" +kjqh+ " " + kjxn + "! 投注号码：" + myNum, toMails);
+                MailSend.sendMail(title + "后二" ,kjqh+" [ "+ kjxn +" ]", properties.getName() +"后二["+properties.getShtj()+"]已有 " + hcount + " 期不中。 投注号码：" + myNum, toMails);
             }
         }
 
@@ -113,7 +113,7 @@ public class LotteryCore {
             qflag = true;
             logger.info("------------------------------ "+ properties.getName() +"前二 [" + properties.getShtj() + "] 已有 [ " + qcount + " ] 期不中");
             if (qcount == properties.getqMax()) {
-                MailSend.sendMail(title + "-" + qh, "前二",properties.getName() +"前二["+properties.getShtj()+"]已有 " + qcount + " 期不中，开奖信息" +kjqh+ " " + kjxn + "! 投注号码：" + myNum, toMails);
+                MailSend.sendMail(title + "前二" ,kjqh+" [ "+ kjxn +" ]", properties.getName() +"前二["+properties.getShtj()+"]已有 " + hcount + " 期不中。 投注号码：" + myNum, toMails);
             }
         }
 
