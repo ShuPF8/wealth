@@ -1,29 +1,29 @@
-package com.spf.wealth.wealth.hu;
+package com.spf.wealth.wealth.hu.huayu;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.spf.utils.mail.MailSend;
+import com.spf.utils.HttpUtil;
+import com.spf.wealth.wealth.hu.Properties;
+import com.spf.wealth.wealth.hu.Write;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Test;
-import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author ShuPF
  * @类说明：
- * @date 2018-09-11 10:09
+ * @date 2018-09-13 14:40
  */
-@Component
-public class TengXunFfTest {
-
+public class HuaYuFfTask {
     private String path = this.getClass().getClassLoader().getResource("").getPath();
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
     private SimpleDateFormat _sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
-
     private int indexItart = path.indexOf("/target");
 
     private String NineNum = "02,03,04,05,06,07,08,09,13,14,15,16,17,19,20,24,25,26,28,30,31,35,37,39,40,41,42,46,47,48,49,50,51,52,53,57,58,59,60,61,62,64,68,69,70,71,73,75,79,80,82,84,85,86,91,93,94,95,96,97";
@@ -34,30 +34,34 @@ public class TengXunFfTest {
 
     private JSONObject json = new JSONObject();
 
-    private TengXunFf tengXunFf = new TengXunFf();
+    private Logger logger = LogManager.getLogger(HuaYuFfTask.class);
 
-    private Logger logger = LogManager.getLogger(TengXunFfTest.class);
+    CloseableHttpClient client = HttpUtil.getClient();
 
     @Test
     public void execute() throws Exception {
-        int nextqh = 648;
+        LotteryCore lotteryCore = new LotteryCore(client,"http://pay4.hbcchy.com/lotterytrend/chart/8", logger);
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("id","8");
+        map.put("pnum","30");
+
+        int nextqh = 917;
         if (nextqh == 1441) {
             nextqh = 1;
         }
-        Properties sevenProperties = new Properties("腾讯分分", SevenNum,nextqh,6,6,"和7,11");
-        Properties nineProperties = new Properties("腾讯分分", NineNum,nextqh,6,6,"和9,11");
-        Properties tenProperties = new Properties("腾讯分分", TenNum,nextqh,6,6,"和8,10");
+        Properties sevenProperties = new Properties("华宇分分", SevenNum,nextqh,7,7,"和7,11", client, map);
+        Properties nineProperties = new Properties("华宇分分", NineNum,nextqh,7,7,"和9,11", client, map);
+        Properties tenProperties = new Properties("华宇分分", TenNum,nextqh,7,7,"和8,10", client, map);
 
-        int count = 0;
         while (true) {
-            count++;
             long start = System.currentTimeMillis();
 
-            login(nextqh);
+            login(lotteryCore,sevenProperties, nextqh);
 
-            executeNine(count,nineProperties);
-            excuteSeven(count,sevenProperties);
-            excuteTen(count,tenProperties);
+            executeNine(lotteryCore,nineProperties);
+            excuteSeven(lotteryCore,sevenProperties);
+            excuteTen(lotteryCore,tenProperties);
 
             nextqh++;
             logger.info("--------------------------------------- 执行结束 {}----------------------------------------\n", _sdf.format(new Date()));
@@ -75,50 +79,50 @@ public class TengXunFfTest {
         }
     }
 
-    public void executeNine(int count, Properties properties) throws Exception {
-        path = path.substring(0, indexItart) + "\\log\\" + sdf.format(new Date()) + "-腾讯分分[和9-11]统计.txt";
+    public void executeNine(LotteryCore lotteryCore, Properties properties) throws Exception {
+        path = path.substring(0, indexItart) + "\\log\\" + sdf.format(new Date()) + "-华宇分分[和9-11]统计.txt";
 
-        tengXunFf.execute(json, properties,1);
-
-        if (properties.getPrevHMaxBuCount() < properties.gethMaxbzCount() || properties.getPrevQMaxBuCount() < properties.getqMaxbzCount()) {
-            properties.setPrevHMaxBuCount(properties.gethMaxbzCount());
-            properties.setPrevQMaxBuCount(properties.getqMaxbzCount());
-            String content = _sdf.format(new Date()) + "\n 腾讯分分[和9-11]今日统计：后二最大连中："+ properties.gethMaxlzCount() +"，后二最大不中："+properties.gethMaxbzCount()+"，前二最大连中："+properties.getqMaxlzCount()+"，前二最大不中：" + properties.getqMaxbzCount() +"\n";
-            Write.write(content, path,true);
-        }
-    }
-
-    public void excuteTen(int count, Properties properties) throws Exception{
-        path = path.substring(0, indexItart) + "\\log\\" + sdf.format(new Date()) + "-腾讯分分[和8-10]统计.txt";
-
-        tengXunFf.execute(json, properties,2);
+        lotteryCore.dataHandle(json, properties,1, logger);
 
         if (properties.getPrevHMaxBuCount() < properties.gethMaxbzCount() || properties.getPrevQMaxBuCount() < properties.getqMaxbzCount()) {
             properties.setPrevHMaxBuCount(properties.gethMaxbzCount());
             properties.setPrevQMaxBuCount(properties.getqMaxbzCount());
-            String content = _sdf.format(new Date()) + "\n 腾讯分分[和8-10]今日统计：后二最大连中："+ properties.gethMaxlzCount() +"，后二最大不中："+properties.gethMaxbzCount()+"，前二最大连中："+properties.getqMaxlzCount()+"，前二最大不中：" + properties.getqMaxbzCount() + "\n";
+            String content = _sdf.format(new Date()) + "\n 华宇分分[和9-11]今日统计：后二最大连中："+ properties.gethMaxlzCount() +"，后二最大不中："+properties.gethMaxbzCount()+"，前二最大连中："+properties.getqMaxlzCount()+"，前二最大不中：" + properties.getqMaxbzCount() +"\n";
             Write.write(content, path,true);
         }
     }
 
-    public void excuteSeven(int count, Properties properties) throws Exception{
-        path = path.substring(0, indexItart) + "\\log\\" + sdf.format(new Date()) + "-腾讯分分[和7-11]统计.txt";
+    public void excuteTen(LotteryCore lotteryCore, Properties properties) throws Exception{
+        path = path.substring(0, indexItart) + "\\log\\" + sdf.format(new Date()) + "-华宇分分[和8-10]统计.txt";
 
-        tengXunFf.execute(json, properties,3);
+        lotteryCore.dataHandle(json, properties,2, logger);
 
         if (properties.getPrevHMaxBuCount() < properties.gethMaxbzCount() || properties.getPrevQMaxBuCount() < properties.getqMaxbzCount()) {
             properties.setPrevHMaxBuCount(properties.gethMaxbzCount());
             properties.setPrevQMaxBuCount(properties.getqMaxbzCount());
-            String content = _sdf.format(new Date()) + "\n 腾讯分分[和7-11]今日统计：后二最大连中："+ properties.gethMaxlzCount() +"，后二最大不中："+properties.gethMaxbzCount()+"，前二最大连中："+properties.getqMaxlzCount()+"，前二最大不中：" + properties.getqMaxbzCount() + "\n";
+            String content = _sdf.format(new Date()) + "\n 华宇分分[和8-10]今日统计：后二最大连中："+ properties.gethMaxlzCount() +"，后二最大不中："+properties.gethMaxbzCount()+"，前二最大连中："+properties.getqMaxlzCount()+"，前二最大不中：" + properties.getqMaxbzCount() + "\n";
             Write.write(content, path,true);
         }
     }
 
-    public void login(int nextqh) throws Exception {
+    public void excuteSeven(LotteryCore lotteryCore, Properties properties) throws Exception{
+        path = path.substring(0, indexItart) + "\\log\\" + sdf.format(new Date()) + "-华宇分分[和7-11]统计.txt";
+
+        lotteryCore.dataHandle(json, properties,3, logger);
+
+        if (properties.getPrevHMaxBuCount() < properties.gethMaxbzCount() || properties.getPrevQMaxBuCount() < properties.getqMaxbzCount()) {
+            properties.setPrevHMaxBuCount(properties.gethMaxbzCount());
+            properties.setPrevQMaxBuCount(properties.getqMaxbzCount());
+            String content = _sdf.format(new Date()) + "\n 华宇分分[和7-11]今日统计：后二最大连中："+ properties.gethMaxlzCount() +"，后二最大不中："+properties.gethMaxbzCount()+"，前二最大连中："+properties.getqMaxlzCount()+"，前二最大不中：" + properties.getqMaxbzCount() + "\n";
+            Write.write(content, path,true);
+        }
+    }
+
+    public void login(LotteryCore lotteryCore, Properties properties, int nextqh) throws Exception {
         Integer qh = 0;
         do {
             Thread.sleep(3000);
-            json = tengXunFf.login(nextqh);
+            json = lotteryCore.query(properties, logger);
             JSONArray datas = json.getJSONArray("data");
             String kjqh = datas.getJSONArray(datas.size() - 1).getString(0);
             qh = Integer.valueOf(kjqh.split("-")[1]);

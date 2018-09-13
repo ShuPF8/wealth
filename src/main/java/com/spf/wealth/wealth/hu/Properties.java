@@ -1,5 +1,9 @@
 package com.spf.wealth.wealth.hu;
 
+import org.apache.http.impl.client.CloseableHttpClient;
+
+import java.util.Map;
+
 /**
  * @author ShuPF
  * @类说明：
@@ -10,7 +14,7 @@ public class Properties {
 
     public String myNum; //我的号码
 
-    private Integer nextqh = 744; //开奖期号
+    private Integer nextqh; //开奖期号
 
     private int hcount = 0; //后二不中次数
 
@@ -38,13 +42,45 @@ public class Properties {
 
     private String shtj = ""; //杀号条件
 
-    public Properties(String name, String myNum, Integer nextqh, int hMax, int qMax, String shtj) {
+    private CloseableHttpClient client;
+    private Map<String, Object> params;
+
+
+    public Properties(String name, String myNum, Integer nextqh, int hMax, int qMax, String shtj, CloseableHttpClient client) {
         this.name = name;
         this.myNum = myNum;
         this.nextqh = nextqh;
         this.hMax = hMax;
         this.qMax = qMax;
         this.shtj = shtj;
+        this.client = client;
+    }
+
+    public Properties(String name, String myNum, Integer nextqh, int hMax, int qMax, String shtj, CloseableHttpClient client, Map<String, Object> params) {
+        this.name = name;
+        this.myNum = myNum;
+        this.nextqh = nextqh;
+        this.hMax = hMax;
+        this.qMax = qMax;
+        this.shtj = shtj;
+        this.client = client;
+        this.params = params;
+    }
+
+    public CloseableHttpClient getClient() {
+        return client;
+    }
+
+    public void setClient(CloseableHttpClient client) {
+        this.client = client;
+    }
+
+    public Map<String, Object> getParams() {
+        return params;
+    }
+
+    public void setParams(Map<String, Object> params) {
+        this.params = params;
     }
 
     public int gethMaxlzCount() {
