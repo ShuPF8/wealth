@@ -36,17 +36,16 @@ public class HuaYuFfTask {
 
     private Logger logger = LogManager.getLogger(HuaYuFfTask.class);
 
-    CloseableHttpClient client = HttpUtil.getClient();
-
     @Test
     public void execute() throws Exception {
+        CloseableHttpClient client = HttpUtil.getClient();
         LotteryCore lotteryCore = new LotteryCore(client,"http://pay4.hbcchy.com/lotterytrend/chart/8", logger);
 
         Map<String, Object> map = new HashMap<>();
         map.put("id","8");
         map.put("pnum","30");
 
-        int nextqh = 917;
+        int nextqh = 1014;
         if (nextqh == 1441) {
             nextqh = 1;
         }

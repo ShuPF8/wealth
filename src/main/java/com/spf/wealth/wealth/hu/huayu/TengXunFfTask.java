@@ -36,17 +36,16 @@ public class TengXunFfTask {
 
     private Logger logger = LogManager.getLogger(TengXunFfTask.class);
 
-    CloseableHttpClient client = HttpUtil.getClient();
-
     @Test
     public void execute() throws Exception {
+        CloseableHttpClient client = HttpUtil.getClient();
         LotteryCore lotteryCore = new LotteryCore(client,"http://pay4.hbcchy.com/lotterytrend/chart/16", logger);
 
         Map<String, Object> map = new HashMap<>();
-        map.put("id","8");
+        map.put("id","16"); //腾讯
         map.put("pnum","30");
 
-        int nextqh = 916;
+        int nextqh = 1013;
         if (nextqh == 1441) {
             nextqh = 1;
         }
