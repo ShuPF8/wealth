@@ -20,6 +20,8 @@ public class Properties {
 
     private int hMaxlzCount = 0; //后二最大连中统计
 
+    private int prevHMaxBuCount = 5; //上一次后二最大不中次数
+
     private int hMaxbzCount = 0; //后二最大不中统计
 
     private int qcount = 0; //前二不中次数
@@ -31,6 +33,8 @@ public class Properties {
     private int qMaxlzCount = 0; //前二最大连中统计
 
     private int qMaxbzCount = 0; //前二最大不中统计
+
+    private int prevQMaxBuCount = 5; //上一次前二最大不中次数
 
     private String shtj = ""; //杀号条件
 
@@ -45,6 +49,22 @@ public class Properties {
 
     public int gethMaxlzCount() {
         return hMaxlzCount;
+    }
+
+    public int getPrevHMaxBuCount() {
+        return prevHMaxBuCount;
+    }
+
+    public void setPrevHMaxBuCount(int prevHMaxBuCount) {
+        this.prevHMaxBuCount = prevHMaxBuCount;
+    }
+
+    public int getPrevQMaxBuCount() {
+        return prevQMaxBuCount;
+    }
+
+    public void setPrevQMaxBuCount(int prevQMaxBuCount) {
+        this.prevQMaxBuCount = prevQMaxBuCount;
     }
 
     public void sethMaxlzCount(int hMaxlzCount) {
