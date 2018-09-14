@@ -24,6 +24,8 @@ public class Properties {
 
     private int hMaxlzCount = 0; //后二最大连中统计
 
+    private int prevHMaxLzCount = 7; //上一次后二最大连中统计
+
     private int prevHMaxBuCount = 5; //上一次后二最大不中次数
 
     private int hMaxbzCount = 0; //后二最大不中统计
@@ -38,7 +40,11 @@ public class Properties {
 
     private int qMaxbzCount = 0; //前二最大不中统计
 
+    private int prevQMaxLzCount = 7; //上一次前二最大连中统计
+
     private int prevQMaxBuCount = 5; //上一次前二最大不中次数
+
+    private long prevWireTime = System.currentTimeMillis(); //上期记录文件时间
 
     private String shtj = ""; //杀号条件
 
@@ -81,6 +87,30 @@ public class Properties {
 
     public void setParams(Map<String, Object> params) {
         this.params = params;
+    }
+
+    public long getPrevWireTime() {
+        return prevWireTime;
+    }
+
+    public void setPrevWireTime(long prevWireTime) {
+        this.prevWireTime = prevWireTime;
+    }
+
+    public int getPrevHMaxLzCount() {
+        return prevHMaxLzCount;
+    }
+
+    public void setPrevHMaxLzCount(int prevHMaxLzCount) {
+        this.prevHMaxLzCount = prevHMaxLzCount;
+    }
+
+    public int getPrevQMaxLzCount() {
+        return prevQMaxLzCount;
+    }
+
+    public void setPrevQMaxLzCount(int prevQMaxLzCount) {
+        this.prevQMaxLzCount = prevQMaxLzCount;
     }
 
     public int gethMaxlzCount() {
