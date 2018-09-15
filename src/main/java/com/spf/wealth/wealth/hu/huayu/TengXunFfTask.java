@@ -61,7 +61,7 @@ public class TengXunFfTask {
         map.put("id","16"); //腾讯
         map.put("pnum","30");
 
-        int nextqh = 1051;
+        int nextqh = 1205;
         if (nextqh == 1441) {
             nextqh = 1;
         }
@@ -121,6 +121,7 @@ public class TengXunFfTask {
         if ((properties.getPrevHMaxBuCount() < properties.gethMaxbzCount() || properties.getPrevQMaxBuCount() < properties.getqMaxbzCount()
                 || properties.getPrevHMaxLzCount() < properties.gethMaxbzCount() || properties.getPrevQMaxLzCount() < properties.getqMaxlzCount())
                 && (time - properties.getPrevWireTime()) > (2 * 60 * 1000)) {
+            properties.setPrevWireTime(time);
             properties.setPrevHMaxBuCount(properties.gethMaxbzCount());
             properties.setPrevQMaxBuCount(properties.getqMaxbzCount());
             String content = _sdf.format(new Date()) + "\n 腾讯分分[和9-11]今日统计：后二最大连中："+ properties.gethMaxlzCount() +"，后二最大不中："+properties.gethMaxbzCount()+"，前二最大连中："+properties.getqMaxlzCount()+"，前二最大不中：" + properties.getqMaxbzCount() +"\n";
@@ -137,6 +138,7 @@ public class TengXunFfTask {
         if ((properties.getPrevHMaxBuCount() < properties.gethMaxbzCount() || properties.getPrevQMaxBuCount() < properties.getqMaxbzCount()
                 || properties.getPrevHMaxLzCount() < properties.gethMaxbzCount() || properties.getPrevQMaxLzCount() < properties.getqMaxlzCount())
                 && (time - properties.getPrevWireTime()) > (2 * 60 * 1000)) {
+            properties.setPrevWireTime(time);
             properties.setPrevHMaxBuCount(properties.gethMaxbzCount());
             properties.setPrevQMaxBuCount(properties.getqMaxbzCount());
             String content = _sdf.format(new Date()) + "\n 腾讯分分[和8-10]今日统计：后二最大连中："+ properties.gethMaxlzCount() +"，后二最大不中："+properties.gethMaxbzCount()+"，前二最大连中："+properties.getqMaxlzCount()+"，前二最大不中：" + properties.getqMaxbzCount() + "\n";
@@ -153,6 +155,7 @@ public class TengXunFfTask {
         if ((properties.getPrevHMaxBuCount() < properties.gethMaxbzCount() || properties.getPrevQMaxBuCount() < properties.getqMaxbzCount()
                 || properties.getPrevHMaxLzCount() < properties.gethMaxbzCount() || properties.getPrevQMaxLzCount() < properties.getqMaxlzCount())
                 && (time - properties.getPrevWireTime()) > (2 * 60 * 1000)) {
+            properties.setPrevWireTime(time);
             properties.setPrevHMaxBuCount(properties.gethMaxbzCount());
             properties.setPrevQMaxBuCount(properties.getqMaxbzCount());
             String content = _sdf.format(new Date()) + "\n 腾讯分分[和7-11]今日统计：后二最大连中："+ properties.gethMaxlzCount() +"，后二最大不中："+properties.gethMaxbzCount()+"，前二最大连中："+properties.getqMaxlzCount()+"，前二最大不中：" + properties.getqMaxbzCount() + "\n";
@@ -169,6 +172,7 @@ public class TengXunFfTask {
         if ((properties.getPrevHMaxBuCount() < properties.gethMaxbzCount() || properties.getPrevQMaxBuCount() < properties.getqMaxbzCount()
                 || properties.getPrevHMaxLzCount() < properties.gethMaxbzCount() || properties.getPrevQMaxLzCount() < properties.getqMaxlzCount())
                 && (time - properties.getPrevWireTime()) > (2 * 60 * 1000)) {
+            properties.setPrevWireTime(time);
             properties.setPrevHMaxBuCount(properties.gethMaxbzCount());
             properties.setPrevQMaxBuCount(properties.getqMaxbzCount());
             String content = _sdf.format(new Date()) + "\n 腾讯分分[和9-10]今日统计：后二最大连中："+ properties.gethMaxlzCount() +"，后二最大不中："+properties.gethMaxbzCount()+"，前二最大连中："+properties.getqMaxlzCount()+"，前二最大不中：" + properties.getqMaxbzCount() + "\n";
@@ -185,6 +189,7 @@ public class TengXunFfTask {
         if ((properties.getPrevHMaxBuCount() < properties.gethMaxbzCount() || properties.getPrevQMaxBuCount() < properties.getqMaxbzCount()
                 || properties.getPrevHMaxLzCount() < properties.gethMaxbzCount() || properties.getPrevQMaxLzCount() < properties.getqMaxlzCount())
                 && (time - properties.getPrevWireTime()) > (2 * 60 * 1000)) {
+            properties.setPrevWireTime(time);
             properties.setPrevHMaxBuCount(properties.gethMaxbzCount());
             properties.setPrevQMaxBuCount(properties.getqMaxbzCount());
             String content = _sdf.format(new Date()) + "\n 腾讯分分[和6-12]今日统计：后二最大连中："+ properties.gethMaxlzCount() +"，后二最大不中："+properties.gethMaxbzCount()+"，前二最大连中："+properties.getqMaxlzCount()+"，前二最大不中：" + properties.getqMaxbzCount() + "\n";
@@ -201,6 +206,7 @@ public class TengXunFfTask {
         if ((properties.getPrevHMaxBuCount() < properties.gethMaxbzCount() || properties.getPrevQMaxBuCount() < properties.getqMaxbzCount()
                 || properties.getPrevHMaxLzCount() < properties.gethMaxbzCount() || properties.getPrevQMaxLzCount() < properties.getqMaxlzCount())
                 && (time - properties.getPrevWireTime()) > (3 * 50 * 1000)) {
+            properties.setPrevWireTime(time);
             properties.setPrevHMaxBuCount(properties.gethMaxbzCount());
             properties.setPrevQMaxBuCount(properties.getqMaxbzCount());
             String content = _sdf.format(new Date()) + "\n 腾讯分分[和9 夸2 定8 胆1-7]今日统计：后二最大连中："+ properties.gethMaxlzCount() +"，后二最大不中："+properties.gethMaxbzCount()+"，前二最大连中："+properties.getqMaxlzCount()+"，前二最大不中：" + properties.getqMaxbzCount() + "\n";
@@ -217,6 +223,7 @@ public class TengXunFfTask {
         if ((properties.getPrevHMaxBuCount() < properties.gethMaxbzCount() || properties.getPrevQMaxBuCount() < properties.getqMaxbzCount()
                 || properties.getPrevHMaxLzCount() < properties.gethMaxbzCount() || properties.getPrevQMaxLzCount() < properties.getqMaxlzCount())
                 && (time - properties.getPrevWireTime()) > (3 * 50 * 1000)) {
+            properties.setPrevWireTime(time);
             properties.setPrevHMaxBuCount(properties.gethMaxbzCount());
             properties.setPrevQMaxBuCount(properties.getqMaxbzCount());
             String content = _sdf.format(new Date()) + "\n 腾讯分分[和10 定7 跨3 胆1-7]今日统计：后二最大连中："+ properties.gethMaxlzCount() +"，后二最大不中："+properties.gethMaxbzCount()+"，前二最大连中："+properties.getqMaxlzCount()+"，前二最大不中：" + properties.getqMaxbzCount() + "\n";
@@ -233,6 +240,7 @@ public class TengXunFfTask {
         if ((properties.getPrevHMaxBuCount() < properties.gethMaxbzCount() || properties.getPrevQMaxBuCount() < properties.getqMaxbzCount()
                 || properties.getPrevHMaxLzCount() < properties.gethMaxbzCount() || properties.getPrevQMaxLzCount() < properties.getqMaxlzCount())
                 && (time - properties.getPrevWireTime()) > (3 * 50 * 1000)) {
+            properties.setPrevWireTime(time);
             properties.setPrevHMaxBuCount(properties.gethMaxbzCount());
             properties.setPrevQMaxBuCount(properties.getqMaxbzCount());
             String content = _sdf.format(new Date()) + "\n 腾讯分分[和10 夸0 1]今日统计：后二最大连中："+ properties.gethMaxlzCount() +"，后二最大不中："+properties.gethMaxbzCount()+"，前二最大连中："+properties.getqMaxlzCount()+"，前二最大不中：" + properties.getqMaxbzCount() + "\n";
