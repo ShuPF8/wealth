@@ -61,7 +61,7 @@ public class HuaYuFfTask {
         map.put("id","8");
         map.put("pnum","30");
 
-        int nextqh = 1046;
+        int nextqh = 1063;
         if (nextqh == 1441) {
             nextqh = 1;
         }
@@ -82,7 +82,7 @@ public class HuaYuFfTask {
             long start = System.currentTimeMillis();
 
             login(lotteryCore,list.get(0), nextqh); //数据查询
-            LotteryUtil.dataHandle(list, lotteryCore, json, path, "tengxun", logger); // 数据处理
+            LotteryUtil.dataHandle(list, lotteryCore, json, path, "huayu", logger); // 数据处理
 
             nextqh++;
             logger.info("--------------------------------------- 执行结束 {}----------------------------------------\n", _sdf.format(new Date()));
