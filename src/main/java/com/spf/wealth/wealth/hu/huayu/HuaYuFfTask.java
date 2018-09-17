@@ -3,18 +3,15 @@ package com.spf.wealth.wealth.hu.huayu;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.spf.utils.HttpUtil;
-import com.spf.utils.mail.MailSend;
+import com.spf.wealth.wealth.hu.LotteryUtil;
 import com.spf.wealth.wealth.hu.Properties;
-import com.spf.wealth.wealth.hu.Write;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Test;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author ShuPF
@@ -64,37 +61,28 @@ public class HuaYuFfTask {
         map.put("id","8");
         map.put("pnum","30");
 
-        int nextqh = 1205;
+        int nextqh = 1046;
         if (nextqh == 1441) {
             nextqh = 1;
         }
-        Properties sevenProperties = new Properties("华宇分分", SevenNum,nextqh,9,9,"和7,11", client, map);
-        Properties nineProperties = new Properties("华宇分分", NineNum,nextqh,7,9,"和9,11", client, map);
-        Properties ntProperties = new Properties("华宇分分", NTnum,nextqh,7,8,"和9,10", client, map);
-        Properties sixProperties = new Properties("华宇分分", sixNum,nextqh,7,8,"和6,12", client, map);
-        Properties tenProperties = new Properties("华宇分分", TenNum,nextqh,7,8,"和8,10", client, map);
-        Properties nine64Properties = new Properties("华宇分分", NineNum64,nextqh,6,6,"和9 夸2 定8 胆1-7", client, map);
-        nine64Properties.setPrevHMaxBuCount(4);
-        nine64Properties.setPrevQMaxBuCount(4);
-        Properties ten65Properties = new Properties("华宇分分", TenNum65,nextqh,6,6,"和10 定7 跨3 胆1-7", client, map);
-        ten65Properties.setPrevHMaxBuCount(4);
-        ten65Properties.setPrevQMaxBuCount(4);
-        Properties ten64Properties = new Properties("华宇分分", TenNum64,nextqh,6,6,"和10 夸0 1", client, map);
-        ten64Properties.setPrevHMaxBuCount(4);
-        ten64Properties.setPrevQMaxBuCount(4);
+
+        int finalNextqh = nextqh;
+        List<Properties> list = new ArrayList<Properties>(){{
+            add(new Properties("华宇分分", SevenNum, finalNextqh,9,9,"和7,11", client, map));
+            add(new Properties("华宇分分", NineNum, finalNextqh,7,8,"和9,11", client, map));
+            add(new Properties("华宇分分", TenNum, finalNextqh,7,8,"和8,10", client, map));
+            add(new Properties("华宇分分", NTnum, finalNextqh,7,8,"和9,10", client, map));
+            add(new Properties("华宇分分", sixNum, finalNextqh,7,8,"和6,12", client, map));
+            add(new Properties("华宇分分", NineNum64, finalNextqh,6,6,"和9 夸2 定8 胆1-7", client, map));
+            add(new Properties("华宇分分", TenNum65, finalNextqh,6,6,"和10 定7 跨3 胆1-7", client, map));
+            add(new Properties("华宇分分", TenNum64, finalNextqh,6,6,"和10 夸0 1", client, map));
+        }};
 
         while (true) {
             long start = System.currentTimeMillis();
 
-            login(lotteryCore,tenProperties, nextqh);
-            executeNine(lotteryCore,nineProperties);
-            excuteSeven(lotteryCore,sevenProperties);
-            excuteNT(lotteryCore,ntProperties);
-            excuteSix(lotteryCore, sixProperties);
-            excuteTen(lotteryCore,tenProperties);
-            NineNum64(lotteryCore, nine64Properties);
-            TenNum64(lotteryCore, ten64Properties);
-            TenNum65(lotteryCore, ten65Properties);
+            login(lotteryCore,list.get(0), nextqh); //数据查询
+            LotteryUtil.dataHandle(list, lotteryCore, json, path, "tengxun", logger); // 数据处理
 
             nextqh++;
             logger.info("--------------------------------------- 执行结束 {}----------------------------------------\n", _sdf.format(new Date()));
@@ -112,142 +100,6 @@ public class HuaYuFfTask {
         }
     }
 
-    public void executeNine(LotteryCore lotteryCore, Properties properties) throws Exception {
-        path = path.substring(0, indexItart) + "\\log\\" + sdf.format(new Date()) + "-华宇分分[和9-11]统计.txt";
-
-        lotteryCore.dataHandle(json, properties,1, logger);
-
-        long time = System.currentTimeMillis();
-        if ((properties.getPrevHMaxBuCount() < properties.gethMaxbzCount() || properties.getPrevQMaxBuCount() < properties.getqMaxbzCount()
-                || properties.getPrevHMaxLzCount() < properties.gethMaxbzCount() || properties.getPrevQMaxLzCount() < properties.getqMaxlzCount())
-                && (time - properties.getPrevWireTime()) > (2 * 60 * 1000)) {
-            properties.setPrevWireTime(time);
-            properties.setPrevHMaxBuCount(properties.gethMaxbzCount());
-            properties.setPrevQMaxBuCount(properties.getqMaxbzCount());
-            String content = _sdf.format(new Date()) + "\n 华宇分分[和9-11]今日统计：后二最大连中："+ properties.gethMaxlzCount() +"，后二最大不中："+properties.gethMaxbzCount()+"，前二最大连中："+properties.getqMaxlzCount()+"，前二最大不中：" + properties.getqMaxbzCount() +"\n";
-            Write.write(content, path,true);
-        }
-    }
-
-    public void excuteTen(LotteryCore lotteryCore, Properties properties) throws Exception{
-        path = path.substring(0, indexItart) + "\\log\\" + sdf.format(new Date()) + "-华宇分分[和8-10]统计.txt";
-
-        lotteryCore.dataHandle(json, properties,2, logger);
-
-        long time = System.currentTimeMillis();
-        if ((properties.getPrevHMaxBuCount() < properties.gethMaxbzCount() || properties.getPrevQMaxBuCount() < properties.getqMaxbzCount()
-                || properties.getPrevHMaxLzCount() < properties.gethMaxbzCount() || properties.getPrevQMaxLzCount() < properties.getqMaxlzCount())
-                && (time - properties.getPrevWireTime()) > (2 * 60 * 1000)) {
-            properties.setPrevWireTime(time);
-            properties.setPrevHMaxBuCount(properties.gethMaxbzCount());
-            properties.setPrevQMaxBuCount(properties.getqMaxbzCount());
-            String content = _sdf.format(new Date()) + "\n 华宇分分[和8-10]今日统计：后二最大连中："+ properties.gethMaxlzCount() +"，后二最大不中："+properties.gethMaxbzCount()+"，前二最大连中："+properties.getqMaxlzCount()+"，前二最大不中：" + properties.getqMaxbzCount() + "\n";
-            Write.write(content, path,true);
-        }
-    }
-
-    public void excuteSeven(LotteryCore lotteryCore, Properties properties) throws Exception{
-        path = path.substring(0, indexItart) + "\\log\\" + sdf.format(new Date()) + "-华宇分分[和7-11]统计.txt";
-
-        lotteryCore.dataHandle(json, properties,3, logger);
-
-        long time = System.currentTimeMillis();
-        if ((properties.getPrevHMaxBuCount() < properties.gethMaxbzCount() || properties.getPrevQMaxBuCount() < properties.getqMaxbzCount()
-                || properties.getPrevHMaxLzCount() < properties.gethMaxbzCount() || properties.getPrevQMaxLzCount() < properties.getqMaxlzCount())
-                && (time - properties.getPrevWireTime()) > (2 * 60 * 1000)) {
-            properties.setPrevWireTime(time);
-            properties.setPrevHMaxBuCount(properties.gethMaxbzCount());
-            properties.setPrevQMaxBuCount(properties.getqMaxbzCount());
-            String content = _sdf.format(new Date()) + "\n 华宇分分[和7-11]今日统计：后二最大连中："+ properties.gethMaxlzCount() +"，后二最大不中："+properties.gethMaxbzCount()+"，前二最大连中："+properties.getqMaxlzCount()+"，前二最大不中：" + properties.getqMaxbzCount() + "\n";
-            Write.write(content, path,true);
-        }
-    }
-
-    public void excuteNT(LotteryCore lotteryCore, Properties properties) throws Exception{
-        path = path.substring(0, indexItart) + "\\log\\" + sdf.format(new Date()) + "-华宇分分[和9-10]统计.txt";
-
-        lotteryCore.dataHandle(json, properties,3, logger);
-
-        long time = System.currentTimeMillis();
-        if ((properties.getPrevHMaxBuCount() < properties.gethMaxbzCount() || properties.getPrevQMaxBuCount() < properties.getqMaxbzCount()
-                || properties.getPrevHMaxLzCount() < properties.gethMaxbzCount() || properties.getPrevQMaxLzCount() < properties.getqMaxlzCount())
-                && (time - properties.getPrevWireTime()) > (2 * 60 * 1000)) {
-            properties.setPrevWireTime(time);
-            properties.setPrevHMaxBuCount(properties.gethMaxbzCount());
-            properties.setPrevQMaxBuCount(properties.getqMaxbzCount());
-            String content = _sdf.format(new Date()) + "\n 华宇分分[和9-10]今日统计：后二最大连中："+ properties.gethMaxlzCount() +"，后二最大不中："+properties.gethMaxbzCount()+"，前二最大连中："+properties.getqMaxlzCount()+"，前二最大不中：" + properties.getqMaxbzCount() + "\n";
-            Write.write(content, path,true);
-        }
-    }
-
-    public void excuteSix(LotteryCore lotteryCore, Properties properties) throws Exception{
-        path = path.substring(0, indexItart) + "\\log\\" + sdf.format(new Date()) + "-华宇分分[和6-12]统计.txt";
-
-        lotteryCore.dataHandle(json, properties,3, logger);
-
-        long time = System.currentTimeMillis();
-        if ((properties.getPrevHMaxBuCount() < properties.gethMaxbzCount() || properties.getPrevQMaxBuCount() < properties.getqMaxbzCount()
-                || properties.getPrevHMaxLzCount() < properties.gethMaxbzCount() || properties.getPrevQMaxLzCount() < properties.getqMaxlzCount())
-                && (time - properties.getPrevWireTime()) > (2 * 60 * 1000)) {
-            properties.setPrevHMaxBuCount(properties.gethMaxbzCount());
-            properties.setPrevQMaxBuCount(properties.getqMaxbzCount());
-            properties.setPrevWireTime(time);
-            String content = _sdf.format(new Date()) + "\n 华宇分分[和6-12]今日统计：后二最大连中："+ properties.gethMaxlzCount() +"，后二最大不中："+properties.gethMaxbzCount()+"，前二最大连中："+properties.getqMaxlzCount()+"，前二最大不中：" + properties.getqMaxbzCount() + "\n";
-            Write.write(content, path,true);
-        }
-    }
-
-    public void NineNum64(LotteryCore lotteryCore, Properties properties) throws Exception{
-        path = path.substring(0, indexItart) + "\\log\\" + sdf.format(new Date()) + "-华宇分分[和9 夸2 定8 胆1-7]统计.txt";
-
-        lotteryCore.dataHandle(json, properties,3, logger);
-
-        long time = System.currentTimeMillis();
-        if ((properties.getPrevHMaxBuCount() < properties.gethMaxbzCount() || properties.getPrevQMaxBuCount() < properties.getqMaxbzCount()
-                || properties.getPrevHMaxLzCount() < properties.gethMaxbzCount() || properties.getPrevQMaxLzCount() < properties.getqMaxlzCount())
-                && (time - properties.getPrevWireTime()) > (3 * 50 * 1000)) {
-            properties.setPrevWireTime(time);
-            properties.setPrevHMaxBuCount(properties.gethMaxbzCount());
-            properties.setPrevQMaxBuCount(properties.getqMaxbzCount());
-            String content = _sdf.format(new Date()) + "\n 华宇分分[和9 夸2 定8 胆1-7]今日统计：后二最大连中："+ properties.gethMaxlzCount() +"，后二最大不中："+properties.gethMaxbzCount()+"，前二最大连中："+properties.getqMaxlzCount()+"，前二最大不中：" + properties.getqMaxbzCount() + "\n";
-            Write.write(content, path,true);
-        }
-    }
-
-    public void TenNum65(LotteryCore lotteryCore, Properties properties) throws Exception{
-        path = path.substring(0, indexItart) + "\\log\\" + sdf.format(new Date()) + "-华宇分分[和10 定7 跨3 胆1-7]统计.txt";
-
-        lotteryCore.dataHandle(json, properties,3, logger);
-
-        long time = System.currentTimeMillis();
-        if ((properties.getPrevHMaxBuCount() < properties.gethMaxbzCount() || properties.getPrevQMaxBuCount() < properties.getqMaxbzCount()
-                || properties.getPrevHMaxLzCount() < properties.gethMaxbzCount() || properties.getPrevQMaxLzCount() < properties.getqMaxlzCount())
-                && (time - properties.getPrevWireTime()) > (3 * 50 * 1000)) {
-            properties.setPrevWireTime(time);
-            properties.setPrevHMaxBuCount(properties.gethMaxbzCount());
-            properties.setPrevQMaxBuCount(properties.getqMaxbzCount());
-            String content = _sdf.format(new Date()) + "\n 华宇分分[和10 定7 跨3 胆1-7]今日统计：后二最大连中："+ properties.gethMaxlzCount() +"，后二最大不中："+properties.gethMaxbzCount()+"，前二最大连中："+properties.getqMaxlzCount()+"，前二最大不中：" + properties.getqMaxbzCount() + "\n";
-            Write.write(content, path,true);
-        }
-    }
-
-    public void TenNum64(LotteryCore lotteryCore, Properties properties) throws Exception{
-        path = path.substring(0, indexItart) + "\\log\\" + sdf.format(new Date()) + "-华宇分分[和10 夸0 1]统计.txt";
-
-        lotteryCore.dataHandle(json, properties,3, logger);
-
-        long time = System.currentTimeMillis();
-        if ((properties.getPrevHMaxBuCount() < properties.gethMaxbzCount() || properties.getPrevQMaxBuCount() < properties.getqMaxbzCount()
-                || properties.getPrevHMaxLzCount() < properties.gethMaxbzCount() || properties.getPrevQMaxLzCount() < properties.getqMaxlzCount())
-                && (time - properties.getPrevWireTime()) > (3 * 50 * 1000)) {
-            properties.setPrevWireTime(time);
-            properties.setPrevHMaxBuCount(properties.gethMaxbzCount());
-            properties.setPrevQMaxBuCount(properties.getqMaxbzCount());
-            String content = _sdf.format(new Date()) + "\n 华宇分分[和10 夸0 1]今日统计：后二最大连中："+ properties.gethMaxlzCount() +"，后二最大不中："+properties.gethMaxbzCount()+"，前二最大连中："+properties.getqMaxlzCount()+"，前二最大不中：" + properties.getqMaxbzCount() + "\n";
-            Write.write(content, path,true);
-        }
-    }
-
     public void login(LotteryCore lotteryCore, Properties properties, int nextqh) throws Exception {
         Integer qh = 0;
         do {
@@ -262,8 +114,8 @@ public class HuaYuFfTask {
 
     @Test
     public void test() throws Exception {
-        String[] toMails = new String[]{"517292069@qq.com"};
-        MailSend.sendMail(  "腾讯分分测试-和5，7" ,"腾讯分分后二", "腾讯分分后二[和5,7]已有 6 期不中，开奖信息 20180913-5555! 投注号码：" + NineNum, toMails);
+
     }
 
 }
+

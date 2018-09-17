@@ -26,7 +26,7 @@ public class Properties {
 
     private int prevHMaxLzCount = 7; //上一次后二最大连中统计
 
-    private int prevHMaxBuCount = 5; //上一次后二最大不中次数
+    private int prevHMaxBuCount = 4; //上一次后二最大不中次数
 
     private int hMaxbzCount = 0; //后二最大不中统计
 
@@ -42,7 +42,7 @@ public class Properties {
 
     private int prevQMaxLzCount = 7; //上一次前二最大连中统计
 
-    private int prevQMaxBuCount = 5; //上一次前二最大不中次数
+    private int prevQMaxBuCount = 4; //上一次前二最大不中次数
 
     private long prevWireTime = System.currentTimeMillis(); //上期记录文件时间
 
