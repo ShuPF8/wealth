@@ -27,12 +27,17 @@ public class LotteryUtil {
      * @param content 内容
      * @param flag 是否不覆盖 false = 覆盖， true = 覆盖
      */
-    public static void write(String content, String path, boolean flag) {
+    public static void write(String content, String path, String name, boolean flag) {
         FileOutputStream outSTr = null;
         BufferedOutputStream Buff = null;
         try {
+            File file = new File(path);
+            if (!file.exists()) {
+                file.mkdir();
+            }
+
             //经过测试：ufferedOutputStream执行耗时:1,1，1 毫秒
-            outSTr = new FileOutputStream(new File(path), flag);
+            outSTr = new FileOutputStream(new File(path + name), flag);
             Buff = new BufferedOutputStream(outSTr);
             Buff.write((content+ "\n\t").getBytes());
             Buff.flush();
@@ -49,7 +54,7 @@ public class LotteryUtil {
         }
     }
 
-    public static void myWrite(Properties properties, String path, String title) {
+    public static void myWrite(Properties properties, String path, String name, String title) {
         long time = System.currentTimeMillis();
         if ((properties.getPrevHMaxBuCount() < properties.gethMaxbzCount() || properties.getPrevQMaxBuCount() < properties.getqMaxbzCount()
                 || properties.getPrevHMaxLzCount() < properties.gethMaxlzCount() || properties.getPrevQMaxLzCount() < properties.getqMaxlzCount())
@@ -60,7 +65,7 @@ public class LotteryUtil {
             properties.setPrevQMaxBuCount(properties.getqMaxbzCount());
             properties.setPrevQMaxLzCount(properties.getqMaxlzCount());
             String content = _sdf.format(new Date()) + title + "今日统计：后二最大连中："+ properties.gethMaxlzCount() +"，后二最大不中："+properties.gethMaxbzCount()+"，前二最大连中："+properties.getqMaxlzCount()+"，前二最大不中：" + properties.getqMaxbzCount() + "\n";
-            write(content, path,true);
+            write(content, path,name,true);
         }
     }
 
@@ -70,13 +75,14 @@ public class LotteryUtil {
         for (int i = 0; i < propertiess.size(); i++) {
             Properties properties = propertiess.get(i);
             String title = properties.getName() + "[" + properties.getShtj() + "]";
-            path = path.substring(0, indexItart) + "\\log\\"+marker+"\\" + sdf.format(new Date()) + "-"+ title +"统计.txt";
+            path = path.substring(0, indexItart) + "\\log\\"+marker +"\\"+ sdf.format(new Date()) +"\\";
+            String name = sdf.format(new Date()) + "-"+ title +"统计.txt";
             try {
                 lotteryCore.dataHandle(json, properties, i, logger);
             } catch (Exception e) {
                 logger.error(e.getMessage());
             }
-            LotteryUtil.myWrite(properties, path, title);
+            LotteryUtil.myWrite(properties, path, name,title);
         }
     }
 }

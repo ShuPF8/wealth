@@ -20,9 +20,7 @@ import java.util.*;
  */
 public class HuaYuFfTask {
     private String path = this.getClass().getClassLoader().getResource("").getPath();
-    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     private SimpleDateFormat _sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
-    private int indexItart = path.indexOf("/target");
 
     //和9 11 跨 0 1
     private String NineNum = "02,03,04,05,06,07,08,09,13,14,15,16,17,19,20,24,25,26,28,30,31,35,37,39,40,41,42,46,47,48,49,50,51,52,53,57,58,59,60,61,62,64,68,69,70,71,73,75,79,80,82,84,85,86,91,93,94,95,96,97";
@@ -48,6 +46,13 @@ public class HuaYuFfTask {
     //和10 夸0 1
     private String TenNum64 = "02 03 04 05 06 07 08 09 13 14 15 16 17 18 20 24 25 26 27 29 30 31 35 36 38 39 40 41 42 47 48 49 50 51 52 53 57 58 59 60 61 62 63 68 69 70 71 72 74 75 79 80 81 83 84 85 86 90 92 93 94 95 96 97";
 
+    //和9 定5 夸1 胆3-9
+    private String NineKua1 = "02 03 04 06 07 08 13 14 16 17 19 20 22 24 26 28 29 30 31 33 37 38 39 40 41 42 44 46 47 48 49 50 51 52 53 57 58 59 60 61 62 64 66 68 69 70 71 73 74 77 79 80 82 83 84 86 88 91 92 93 94 96 97 99";
+
+    //和12 定2 跨3 胆0134568
+    private String He12 = "00 01 04 05 06 07 08 09 10 11 13 15 16 17 18 19 20 21 23 24 26 28 31 33 34 35 37 38 40 43 44 45 46 49 50 51 53 54 55 56 59 60 61 64 65 67 68 70 71 73 76 78 80 81 83 86 87 88 89 90 91 94 95 98";
+
+
     private JSONObject json = new JSONObject();
 
     private Logger logger = LogManager.getLogger(HuaYuFfTask.class);
@@ -61,7 +66,7 @@ public class HuaYuFfTask {
         map.put("id","8");
         map.put("pnum","30");
 
-        int nextqh = 1063;
+        int nextqh = 801;
         if (nextqh == 1441) {
             nextqh = 1;
         }
@@ -69,13 +74,15 @@ public class HuaYuFfTask {
         int finalNextqh = nextqh;
         List<Properties> list = new ArrayList<Properties>(){{
             add(new Properties("华宇分分", SevenNum, finalNextqh,9,9,"和7,11", client, map));
-            add(new Properties("华宇分分", NineNum, finalNextqh,7,8,"和9,11", client, map));
-            add(new Properties("华宇分分", TenNum, finalNextqh,7,8,"和8,10", client, map));
-            add(new Properties("华宇分分", NTnum, finalNextqh,7,8,"和9,10", client, map));
-            add(new Properties("华宇分分", sixNum, finalNextqh,7,8,"和6,12", client, map));
+            add(new Properties("华宇分分", NineNum, finalNextqh,8,8,"和9,11", client, map));
+            add(new Properties("华宇分分", TenNum, finalNextqh,8,8,"和8,10", client, map));
+            add(new Properties("华宇分分", NTnum, finalNextqh,8,8,"和9,10", client, map));
+            add(new Properties("华宇分分", sixNum, finalNextqh,8,8,"和6,12", client, map));
             add(new Properties("华宇分分", NineNum64, finalNextqh,6,6,"和9 夸2 定8 胆1-7", client, map));
             add(new Properties("华宇分分", TenNum65, finalNextqh,6,6,"和10 定7 跨3 胆1-7", client, map));
             add(new Properties("华宇分分", TenNum64, finalNextqh,6,6,"和10 夸0 1", client, map));
+            add(new Properties("华宇分分", NineKua1, finalNextqh,8,6,"和9 定5 夸1 胆3-9", client, map));
+            add(new Properties("华宇分分", He12, finalNextqh,6,6,"和12 定2 跨3 胆0134568", client, map));
         }};
 
         while (true) {
