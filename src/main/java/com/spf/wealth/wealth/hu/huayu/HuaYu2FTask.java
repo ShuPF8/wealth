@@ -15,10 +15,10 @@ import java.util.*;
 
 /**
  * @author ShuPF
- * @类说明：
+ * @类说明： 华宇二分彩
  * @date 2018-09-13 14:40
  */
-public class HuaYuFfTask {
+public class HuaYu2FTask {
     private String path = this.getClass().getClassLoader().getResource("").getPath();
     private SimpleDateFormat _sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
 
@@ -55,54 +55,61 @@ public class HuaYuFfTask {
 
     private JSONObject json = new JSONObject();
 
-    private Logger logger = LogManager.getLogger(HuaYuFfTask.class);
+    private Logger logger = LogManager.getLogger(HuaYu2FTask.class);
 
     @Test
     public void execute() throws Exception {
         CloseableHttpClient client = HttpUtil.getClient();
-        LotteryCore lotteryCore = new LotteryCore(client,"http://pay4.hbcchy.com/lotterytrend/chart/8", logger);
+        LotteryCore lotteryCore = new LotteryCore(client,"http://pay4.hbcchy.com/lotterytrend/chart/7", logger);
 
         Map<String, Object> map = new HashMap<>();
-        map.put("id","8");
+        map.put("id","7");
         map.put("pnum","30");
 
-        int nextqh = 1224;
+        int nextqh = 636;
         if (nextqh == 1441) {
             nextqh = 1;
         }
 
         int finalNextqh = nextqh;
         List<Properties> list = new ArrayList<Properties>(){{
-            add(new Properties("华宇分分", SevenNum, finalNextqh,9,9,"和7,11", client, map));
-            add(new Properties("华宇分分", NineNum, finalNextqh,8,8,"和9,11", client, map));
-            add(new Properties("华宇分分", TenNum, finalNextqh,8,8,"和8,10", client, map));
-            add(new Properties("华宇分分", NTnum, finalNextqh,8,8,"和9,10", client, map));
-            add(new Properties("华宇分分", sixNum, finalNextqh,8,8,"和6,12", client, map));
-            add(new Properties("华宇分分", NineNum64, finalNextqh,6,6,"和9 夸2 定8 胆1-7", client, map));
-            add(new Properties("华宇分分", TenNum65, finalNextqh,6,6,"和10 定7 跨3 胆1-7", client, map));
-            add(new Properties("华宇分分", TenNum64, finalNextqh,6,6,"和10 夸0 1", client, map));
-            add(new Properties("华宇分分", NineKua1, finalNextqh,8,6,"和9 定5 夸1 胆3-9", client, map));
-            add(new Properties("华宇分分", He12, finalNextqh,6,6,"和12 定2 跨3 胆0134568", client, map));
+            add(new Properties("华宇二分分", SevenNum, finalNextqh,8,8,"和7,11", client, map));
+            add(new Properties("华宇二分分", NineNum, finalNextqh,8,8,"和9,11", client, map));
+            add(new Properties("华宇二分分", TenNum, finalNextqh,8,8,"和8,10", client, map));
+            add(new Properties("华宇二分分", NTnum, finalNextqh,8,8,"和9,10", client, map));
+            add(new Properties("华宇二分分", sixNum, finalNextqh,8,8,"和6,12", client, map));
+            add(new Properties("华宇二分分", NineNum64, finalNextqh,6,6,"和9 夸2 定8 胆1-7", client, map));
+            add(new Properties("华宇二分分", TenNum65, finalNextqh,6,6,"和10 定7 跨3 胆1-7", client, map));
+            add(new Properties("华宇二分分", TenNum64, finalNextqh,6,6,"和10 夸0 1", client, map));
+            add(new Properties("华宇二分分", NineKua1, finalNextqh,7,6,"和9 定5 夸1 胆3-9", client, map));
+            add(new Properties("华宇二分分", He12, finalNextqh,6,6,"和12 定2 跨3 胆0134568", client, map));
         }};
 
         while (true) {
             long start = System.currentTimeMillis();
 
             login(lotteryCore,list.get(0), nextqh); //数据查询
-            LotteryUtil.dataHandle(list, lotteryCore, json, path, "huayu", logger); // 数据处理
+            LotteryUtil.dataHandle(list, lotteryCore, json, path, "huayu2f", logger); // 数据处理
 
             nextqh++;
             logger.info("--------------------------------------- 执行结束 {}----------------------------------------\n", _sdf.format(new Date()));
 
             long end = System.currentTimeMillis();
             long sjc = (end - start) / 1000; //时间差 秒
-            if (sjc < 30) {
-                Thread.sleep((60 - sjc) / 2 * 1000);
+            if (sjc < 50) {
+                Thread.sleep((120 - sjc) / 2 * 1000);
+            }
+
+            end = System.currentTimeMillis();
+            sjc = (end - start) / 1000; //时间差 秒
+
+            if (sjc > 30) {
+                Thread.sleep(sjc / 2 * 1000);
             }
 
             do {
                 end = System.currentTimeMillis();
-            } while (end - start < 60000);
+            } while (end - start < 120000);
 
         }
     }
@@ -110,17 +117,12 @@ public class HuaYuFfTask {
     public void login(LotteryCore lotteryCore, Properties properties, int nextqh) throws Exception {
         Integer qh = 0;
         do {
-            Thread.sleep(3000);
+            Thread.sleep(5000);
             json = lotteryCore.query(properties, logger);
             JSONArray datas = json.getJSONArray("data");
             String kjqh = datas.getJSONArray(datas.size() - 1).getString(0);
             qh = Integer.valueOf(kjqh.split("-")[1]);
         } while (nextqh - qh != 0);
-
-    }
-
-    @Test
-    public void test() throws Exception {
 
     }
 

@@ -3,6 +3,7 @@ package com.spf.wealth.wealth.hu;
 import com.alibaba.fastjson.JSONObject;
 import com.spf.wealth.wealth.hu.huayu.LotteryCore;
 import org.apache.logging.log4j.Logger;
+import org.junit.Test;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -33,7 +34,7 @@ public class LotteryUtil {
         try {
             File file = new File(path);
             if (!file.exists()) {
-                file.mkdir();
+                file.mkdirs();
             }
 
             //经过测试：ufferedOutputStream执行耗时:1,1，1 毫秒
@@ -85,4 +86,10 @@ public class LotteryUtil {
             LotteryUtil.myWrite(properties, path, name,title);
         }
     }
+
+    @Test
+    public void test() {
+        LotteryUtil.write("测试", "E:\\GitHub\\wealth\\log\\huayu2f\\" + sdf.format(new Date()) +"\\", "统计.txt",true);
+    }
+
 }
