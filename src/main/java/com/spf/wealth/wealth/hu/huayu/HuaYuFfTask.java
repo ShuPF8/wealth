@@ -66,7 +66,7 @@ public class HuaYuFfTask {
         map.put("id","8");
         map.put("pnum","30");
 
-        int nextqh = 1224;
+        int nextqh = 588;
         if (nextqh == 1441) {
             nextqh = 1;
         }

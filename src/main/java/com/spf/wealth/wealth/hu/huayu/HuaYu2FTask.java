@@ -66,7 +66,7 @@ public class HuaYu2FTask {
         map.put("id","7");
         map.put("pnum","30");
 
-        int nextqh = 636;
+        int nextqh = 296;
         if (nextqh == 1441) {
             nextqh = 1;
         }
@@ -101,7 +101,7 @@ public class HuaYu2FTask {
             }
 
             end = System.currentTimeMillis();
-            sjc = (end - start) / 1000; //时间差 秒
+            sjc = (120 - (end - start)) / 1000; //时间差 秒
 
             if (sjc > 30) {
                 Thread.sleep(sjc / 2 * 1000);

@@ -64,7 +64,7 @@ public class TengXunFfTask {
         map.put("id","16"); //腾讯
         map.put("pnum","30");
 
-        int nextqh = 1323;
+        int nextqh = 587;
         if (nextqh == 1441) {
             nextqh = 1;
         }
