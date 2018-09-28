@@ -66,22 +66,22 @@ public class HuaYu2FTask {
         map.put("id","7");
         map.put("pnum","30");
 
-        int nextqh = 294;
+        int nextqh = 299;
         if (nextqh == 1441) {
             nextqh = 1;
         }
 
         int finalNextqh = nextqh;
         List<Properties> list = new ArrayList<Properties>(){{
-            add(new Properties("华宇二分分", SevenNum, finalNextqh,8,8,"和7 11 跨 0 1", client, map));
-            add(new Properties("华宇二分分", NineNum, finalNextqh,8,8,"和9 11 跨 0 1", client, map));
-            add(new Properties("华宇二分分", TenNum, finalNextqh,8,8,"和8 10 跨 0 1", client, map));
-            add(new Properties("华宇二分分", NTnum, finalNextqh,8,8,"和9 10 跨 0 3", client, map));
+            add(new Properties("华宇二分分", SevenNum, finalNextqh,7,7,"和7 11 跨 0 1", client, map));
+            add(new Properties("华宇二分分", NineNum, finalNextqh,7,7,"和9 11 跨 0 1", client, map));
+            add(new Properties("华宇二分分", TenNum, finalNextqh,7,7,"和8 10 跨 0 1", client, map));
+            add(new Properties("华宇二分分", NTnum, finalNextqh,7,7,"和9 10 跨 0 3", client, map));
             add(new Properties("华宇二分分", sixNum, finalNextqh,7,7,"和6 12 跨0 1", client, map));
             add(new Properties("华宇二分分", NineNum64, finalNextqh,6,6,"和9 夸2 定8 胆1-7", client, map));
             add(new Properties("华宇二分分", TenNum65, finalNextqh,6,6,"和10 定7 跨3 胆1-7", client, map));
             add(new Properties("华宇二分分", TenNum64, finalNextqh,6,6,"和10 夸0 1", client, map));
-            add(new Properties("华宇二分分", NineKua1, finalNextqh,7,6,"和9 定5 夸1 胆3-9", client, map));
+            add(new Properties("华宇二分分", NineKua1, finalNextqh,6,6,"和9 定5 夸1 胆3-9", client, map));
             add(new Properties("华宇二分分", He12, finalNextqh,6,6,"和12 定2 跨3 胆0134568", client, map));
         }};
 

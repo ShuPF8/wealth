@@ -64,21 +64,21 @@ public class TengXunFfTask {
         map.put("id","16"); //腾讯
         map.put("pnum","30");
 
-        int nextqh = 587;
+        int nextqh = 850;
         if (nextqh == 1441) {
             nextqh = 1;
         }
 
         int finalNextqh = nextqh;
         List<Properties> list = new ArrayList<Properties>(){{
-            add(new Properties("腾讯分分", SevenNum, finalNextqh,8,7,"和7 11 跨 0 1", client, map));
-            add(new Properties("腾讯分分", NineNum, finalNextqh,8,7,"和9 11 跨 0 1", client, map));
+            add(new Properties("腾讯分分", SevenNum, finalNextqh,7,7,"和7 11 跨 0 1", client, map));
+            add(new Properties("腾讯分分", NineNum, finalNextqh,7,7,"和9 11 跨 0 1", client, map));
             add(new Properties("腾讯分分", TenNum, finalNextqh,7,7,"和8 10 跨 0 1", client, map));
             add(new Properties("腾讯分分", NTnum, finalNextqh,7,7,"和9 10 跨 0 3", client, map));
-            add(new Properties("腾讯分分", sixNum, finalNextqh,8,7,"和6 12 跨0 1", client, map));
+            add(new Properties("腾讯分分", sixNum, finalNextqh,7,7,"和6 12 跨0 1", client, map));
             add(new Properties("腾讯分分", NineNum64, finalNextqh,6,6,"和9 夸2 定8 胆1-7", client, map));
             add(new Properties("腾讯分分", TenNum65, finalNextqh,6,6,"和10 定7 跨3 胆1-7", client, map));
-            add(new Properties("腾讯分分", TenNum64, finalNextqh,6,7,"和10 夸0 1", client, map));
+            add(new Properties("腾讯分分", TenNum64, finalNextqh,6,6,"和10 夸0 1", client, map));
             add(new Properties("腾讯分分", NineKua1, finalNextqh,6,6,"和9 定5 夸1 胆3-9", client, map));
             add(new Properties("腾讯分分", He12, finalNextqh,6,6,"和12 定2 跨3 胆0134568", client, map));
         }};
