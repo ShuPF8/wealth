@@ -25,6 +25,9 @@ public class LotteryUtil {
     /**
      *  写文件
      * @param path 路径
+     *             (properties.getPrevHMaxBuCount() < properties.gethMaxbzCount() || properties.getPrevQMaxBuCount() < properties.getqMaxbzCount()
+     *                 || properties.getPrevHMaxLzCount() < properties.gethMaxlzCount() || properties.getPrevQMaxLzCount() < properties.getqMaxlzCount())
+     *                 && (time - properties.getPrevWireTime()) > (3 * 50 * 1000)
      * @param content 内容
      * @param flag 是否不覆盖 false = 覆盖， true = 覆盖
      */
@@ -57,15 +60,18 @@ public class LotteryUtil {
 
     public static void myWrite(Properties properties, String path, String name, String title) {
         long time = System.currentTimeMillis();
-        if ((properties.getPrevHMaxBuCount() < properties.gethMaxbzCount() || properties.getPrevQMaxBuCount() < properties.getqMaxbzCount()
-                || properties.getPrevHMaxLzCount() < properties.gethMaxlzCount() || properties.getPrevQMaxLzCount() < properties.getqMaxlzCount())
-                && (time - properties.getPrevWireTime()) > (3 * 50 * 1000)) {
+        if ((properties.getHcount() >= 4 || properties.getQcount() >= 4) ||
+                ((properties.getPrevHMaxLzCount() < properties.gethMaxlzCount() || properties.getPrevQMaxLzCount() < properties.getqMaxlzCount())
+                        && (time - properties.getPrevWireTime()) > (3 * 50 * 1000))) { //记录连续四次不中的的日志
             properties.setPrevWireTime(time);
             properties.setPrevHMaxBuCount(properties.gethMaxbzCount());
             properties.setPrevHMaxLzCount(properties.gethMaxlzCount());
             properties.setPrevQMaxBuCount(properties.getqMaxbzCount());
             properties.setPrevQMaxLzCount(properties.getqMaxlzCount());
-            String content = _sdf.format(new Date()) + title + "今日统计：后二最大连中："+ properties.gethMaxlzCount() +"，后二最大不中："+properties.gethMaxbzCount()+"，前二最大连中："+properties.getqMaxlzCount()+"，前二最大不中：" + properties.getqMaxbzCount() + "\n";
+            String content = _sdf.format(new Date()) + title + "今日统计：" +
+                    " 后二最大连中：[ "+ properties.gethMaxlzCount() +" ]，后二最大不中：[ "+properties.gethMaxbzCount()+
+                    " ]，前二最大连中：[ "+properties.getqMaxlzCount()+" ]，前二最大不中：[ " + properties.getqMaxbzCount() +
+                    " ]，后二连续不中次数：[ " + properties.getHcount() + " ]， 前二连续不中次数：[ " + properties.getQcount() + " ]\n";
             write(content, path,name,true);
         }
     }
