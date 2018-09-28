@@ -23,7 +23,7 @@ public class LotteryCore {
 
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
 
-    private String[] toMails = new String[]{"517292069@qq.com","1129711788@qq.com"};
+    private String[] toMails = new String[]{"517292069@qq.com"};
 
     public LotteryCore(CloseableHttpClient client, String url, Logger logger) {
         try {

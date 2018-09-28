@@ -60,7 +60,7 @@ public class TengXunFfTask {
         map.put("id","16"); //腾讯
         map.put("pnum","30");
 
-        int nextqh = 850;
+        int nextqh = 928;
         if (nextqh == 1441) {
             nextqh = 1;
         }

@@ -68,10 +68,10 @@ public class LotteryUtil {
             properties.setPrevHMaxLzCount(properties.gethMaxlzCount());
             properties.setPrevQMaxBuCount(properties.getqMaxbzCount());
             properties.setPrevQMaxLzCount(properties.getqMaxlzCount());
-            String content = _sdf.format(new Date()) + title + "今日统计：" +
+            String content = _sdf.format(new Date()) + title + "今日统计：\n" +
                     " 后二最大连中：[ "+ properties.gethMaxlzCount() +" ]，后二最大不中：[ "+properties.gethMaxbzCount()+
                     " ]，前二最大连中：[ "+properties.getqMaxlzCount()+" ]，前二最大不中：[ " + properties.getqMaxbzCount() +
-                    " ]，后二连续不中次数：[ " + properties.getHcount() + " ]， 前二连续不中次数：[ " + properties.getQcount() + " ]\n";
+                    " ]，后二连续不中次数：[ " + properties.getHcount() + " ]， 前二连续不中次数：[ " + properties.getQcount() + " ]";
             write(content, path,name,true);
         }
     }
