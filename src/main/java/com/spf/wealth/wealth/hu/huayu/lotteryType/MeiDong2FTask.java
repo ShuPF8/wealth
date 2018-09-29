@@ -1,10 +1,11 @@
-package com.spf.wealth.wealth.hu.huayu;
+package com.spf.wealth.wealth.hu.huayu.lotteryType;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.spf.utils.HttpUtil;
 import com.spf.wealth.wealth.hu.LotteryUtil;
 import com.spf.wealth.wealth.hu.Properties;
+import com.spf.wealth.wealth.hu.huayu.LotteryCore;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,10 +16,10 @@ import java.util.*;
 
 /**
  * @author ShuPF
- * @类说明： 东京1.5分彩
+ * @类说明： 美东2分彩
  * @date 2018-09-13 14:40
  */
-public class DongJing1D5FTask {
+public class MeiDong2FTask {
     private String path = this.getClass().getClassLoader().getResource("").getPath();
     private SimpleDateFormat _sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
 
@@ -49,39 +50,35 @@ public class DongJing1D5FTask {
 
     private JSONObject json = new JSONObject();
 
-    private Logger logger = LogManager.getLogger(DongJing1D5FTask.class);
+    private Logger logger = LogManager.getLogger(MeiDong2FTask.class);
 
     @Test
     public void execute() throws Exception {
         CloseableHttpClient client = HttpUtil.getClient();
-        LotteryCore lotteryCore = new LotteryCore(client,"http://pay4.hbcchy.com/lotterytrend/chart/12", logger);
+        LotteryCore lotteryCore = new LotteryCore(client,"http://pay4.hbcchy.com/lotterytrend/chart/18", logger);
 
         Map<String, Object> map = new HashMap<>();
-        map.put("id","12");
+        map.put("id","18");
         map.put("pnum","30");
 
-        int nextqh = 524;
-        if (nextqh == 1441) {
-            nextqh = 1;
-        }
-
+        int nextqh = 1713909;
         int finalNextqh = nextqh;
         List<Properties> list = new ArrayList<Properties>(){{
-            add(new Properties("东京1.5分彩", ThirteenNum66, finalNextqh,6,6,"Q 和9 13 夸2 胆12345678", client, map));
-            add(new Properties("东京1.5分彩", EightNum66, finalNextqh,6,6,"Q 和8 10 跨0 定0 胆012345679", client, map));
-            add(new Properties("东京1.5分彩", ElevenNum66, finalNextqh,6,6,"Q 和11 夸1 胆23456789 定6", client, map));
-            add(new Properties("东京1.5分彩", SevenNum66, finalNextqh,6,6,"Q 和7 夸3 定2 胆1245689", client, map));
-            add(new Properties("东京1.5分彩", sixNum66, finalNextqh,6,6,"Q 和6 跨0 4 定9", client, map));
-            add(new Properties("东京1.5分彩", TwelveNum66, finalNextqh,6,6,"W 和12 跨0 5 定1", client, map));
-            add(new Properties("东京1.5分彩", Twelve2Num66, finalNextqh,6,6,"W 和12 跨0 1", client, map));
-            add(new Properties("东京1.5分彩", FourNum66, finalNextqh,6,6,"W 和4 14 跨1 胆1235689", client, map));
+            add(new Properties("美东2分彩", ThirteenNum66, finalNextqh,6,6,"Q 和9 13 夸2 胆12345678", client, map));
+            add(new Properties("美东2分彩", EightNum66, finalNextqh,6,6,"Q 和8 10 跨0 定0 胆012345679", client, map));
+            add(new Properties("美东2分彩", ElevenNum66, finalNextqh,6,6,"Q 和11 夸1 胆23456789 定6", client, map));
+            add(new Properties("美东2分彩", SevenNum66, finalNextqh,6,6,"Q 和7 夸3 定2 胆1245689", client, map));
+            add(new Properties("美东2分彩", sixNum66, finalNextqh,6,6,"Q 和6 跨0 4 定9", client, map));
+            add(new Properties("美东2分彩", TwelveNum66, finalNextqh,6,6,"W 和12 跨0 5 定1", client, map));
+            add(new Properties("美东2分彩", Twelve2Num66, finalNextqh,6,6,"W 和12 跨0 1", client, map));
+            add(new Properties("美东2分彩", FourNum66, finalNextqh,6,6,"W 和4 14 跨1 胆1235689", client, map));
         }};
 
         while (true) {
             long start = System.currentTimeMillis();
 
             login(lotteryCore,list.get(0), nextqh); //数据查询
-            LotteryUtil.dataHandle(list, lotteryCore, json, path, "dongjing1D5", logger); // 数据处理
+            LotteryUtil.dataHandle2(list, lotteryCore, json, path, "meidong2f", logger); // 数据处理
 
             nextqh++;
             logger.info("--------------------------------------- 执行结束 {}----------------------------------------\n", _sdf.format(new Date()));
@@ -89,11 +86,11 @@ public class DongJing1D5FTask {
             long end = System.currentTimeMillis();
             long sjc = (end - start) / 1000; //时间差 秒
             if (sjc < 50) {
-                Thread.sleep((90 - sjc) / 2 * 1000);
+                Thread.sleep((120 - sjc) / 2 * 1000);
             }
 
             end = System.currentTimeMillis();
-            sjc = (90 - (end - start)) / 1000; //时间差 秒
+            sjc = (120 - (end - start)) / 1000; //时间差 秒
 
             if (sjc > 30) {
                 Thread.sleep(sjc / 2 * 1000);
@@ -101,7 +98,7 @@ public class DongJing1D5FTask {
 
             do {
                 end = System.currentTimeMillis();
-            } while (end - start < 90000);
+            } while (end - start < 120000);
 
         }
     }
@@ -109,11 +106,11 @@ public class DongJing1D5FTask {
     private void login(LotteryCore lotteryCore, Properties properties, int nextqh) throws Exception {
         Integer qh = 0;
         do {
-            Thread.sleep(14000);
+            Thread.sleep(8000);
             json = lotteryCore.query(properties, logger);
             JSONArray datas = json.getJSONArray("data");
             String kjqh = datas.getJSONArray(datas.size() - 1).getString(0);
-            qh = Integer.valueOf(kjqh.split("-")[1]);
+            qh = Integer.valueOf(kjqh);
         } while (nextqh - qh != 0);
 
     }

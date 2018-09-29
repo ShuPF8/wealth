@@ -1,10 +1,11 @@
-package com.spf.wealth.wealth.hu.huayu;
+package com.spf.wealth.wealth.hu.huayu.lotteryType;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.spf.utils.HttpUtil;
 import com.spf.wealth.wealth.hu.LotteryUtil;
 import com.spf.wealth.wealth.hu.Properties;
+import com.spf.wealth.wealth.hu.huayu.LotteryCore;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -60,7 +61,7 @@ public class HuaYu2FTask {
         map.put("id","7");
         map.put("pnum","30");
 
-        int nextqh = 349;
+        int nextqh = 420;
         if (nextqh == 1441) {
             nextqh = 1;
         }

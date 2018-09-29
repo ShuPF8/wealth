@@ -21,9 +21,10 @@ import java.util.Date;
  */
 public class LotteryCore {
 
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
+    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
 
-    private String[] toMails = new String[]{"517292069@qq.com"};
+    private String[] toMails = (Integer.valueOf((new SimpleDateFormat("dd")).format(new Date())) % 2) == 0 ?
+            new String[]{"517292069@qq.com"} : new String[]{"1215852831@qq.com"};
 
     public LotteryCore(CloseableHttpClient client, String url, Logger logger) {
         try {
