@@ -85,7 +85,23 @@ public class LotteryUtil {
             path = path.substring(0, indexItart) + "\\log\\"+marker +"\\"+ sdf.format(new Date()) +"\\";
             String name = sdf.format(new Date()) + "-"+ title +"统计.txt";
             try {
-                lotteryCore.dataHandle(json, properties, i, logger);
+                lotteryCore.dataHandle(json, properties, i + 1, logger);
+            } catch (Exception e) {
+                logger.error(e.getMessage());
+            }
+            LotteryUtil.myWrite(properties, path, name,title);
+        }
+    }
+
+    public static void dataHandle2(List<Properties> propertiess, LotteryCore lotteryCore, JSONObject json, String path,String marker, Logger logger) {
+        int indexItart = path.indexOf("/target");
+        for (int i = 0; i < propertiess.size(); i++) {
+            Properties properties = propertiess.get(i);
+            String title = properties.getName() + "[" + properties.getShtj() + "]";
+            path = path.substring(0, indexItart) + "\\log\\"+marker +"\\"+ sdf.format(new Date()) +"\\";
+            String name = sdf.format(new Date()) + "-"+ title +"统计.txt";
+            try {
+                lotteryCore.dataHandle2(json, properties, i + 1, logger);
             } catch (Exception e) {
                 logger.error(e.getMessage());
             }

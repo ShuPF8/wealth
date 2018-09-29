@@ -15,12 +15,11 @@ import java.util.*;
 
 /**
  * @author ShuPF
- * @类说明：
+ * @类说明： 韩式1.5分彩
  * @date 2018-09-13 14:40
  */
-public class TengXunFfTask {
+public class HanShi1D5FTask {
     private String path = this.getClass().getClassLoader().getResource("").getPath();
-
     private SimpleDateFormat _sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
 
     //和9 13 夸2 胆12345678
@@ -47,54 +46,58 @@ public class TengXunFfTask {
     //和4 14 跨1 胆1235689
     private String FourNum66 = "02 03 05 06 08 09 11 14 15 16 17 18 19 20 24 25 26 27 28 29 30 33 35 36 37 38 39 41 42 46 48 49 50 51 52 53 55 57 58 60 61 62 63 64 66 69 71 72 73 75 79 80 81 82 83 84 85 88 90 91 92 93 94 96 97 99";
 
+
     private JSONObject json = new JSONObject();
 
-    private Logger logger = LogManager.getLogger(TengXunFfTask.class);
+    private Logger logger = LogManager.getLogger(HanShi1D5FTask.class);
 
     @Test
     public void execute() throws Exception {
         CloseableHttpClient client = HttpUtil.getClient();
-        LotteryCore lotteryCore = new LotteryCore(client,"http://pay4.hbcchy.com/lotterytrend/chart/16", logger);
+        LotteryCore lotteryCore = new LotteryCore(client,"http://pay4.hbcchy.com/lotterytrend/chart/11", logger);
 
         Map<String, Object> map = new HashMap<>();
-        map.put("id","16"); //腾讯
+        map.put("id","11");
         map.put("pnum","30");
 
-        int nextqh = 589;
-        if (nextqh == 1441) {
-            nextqh = 1;
-        }
-
+        int nextqh = 2293045;
         int finalNextqh = nextqh;
         List<Properties> list = new ArrayList<Properties>(){{
-            add(new Properties("腾讯分分", ThirteenNum66, finalNextqh,6,6,"Q 和9 13 夸2 胆12345678", client, map));
-            add(new Properties("腾讯分分", EightNum66, finalNextqh,6,6,"Q 和8 10 跨0 定0 胆012345679", client, map));
-            add(new Properties("腾讯分分", ElevenNum66, finalNextqh,6,6,"Q 和11 夸1 胆23456789 定6", client, map));
-            add(new Properties("腾讯分分", SevenNum66, finalNextqh,6,6,"Q 和7 夸3 定2 胆1245689", client, map));
-            add(new Properties("腾讯分分", sixNum66, finalNextqh,6,6,"Q 和6 跨0 4 定9", client, map));
-            add(new Properties("腾讯分分", TwelveNum66, finalNextqh,6,6,"W 和12 跨0 5 定1", client, map));
-            add(new Properties("腾讯分分", Twelve2Num66, finalNextqh,6,6,"W 和12 跨0 1", client, map));
-            add(new Properties("腾讯分分", FourNum66, finalNextqh,6,6,"W 和4 14 跨1 胆1235689", client, map));
+            add(new Properties("韩式1.5分彩", ThirteenNum66, finalNextqh,6,6,"Q 和9 13 夸2 胆12345678", client, map));
+            add(new Properties("韩式1.5分彩", EightNum66, finalNextqh,6,6,"Q 和8 10 跨0 定0 胆012345679", client, map));
+            add(new Properties("韩式1.5分彩", ElevenNum66, finalNextqh,6,6,"Q 和11 夸1 胆23456789 定6", client, map));
+            add(new Properties("韩式1.5分彩", SevenNum66, finalNextqh,6,6,"Q 和7 夸3 定2 胆1245689", client, map));
+            add(new Properties("韩式1.5分彩", sixNum66, finalNextqh,6,6,"Q 和6 跨0 4 定9", client, map));
+            add(new Properties("韩式1.5分彩", TwelveNum66, finalNextqh,6,6,"W 和12 跨0 5 定1", client, map));
+            add(new Properties("韩式1.5分彩", Twelve2Num66, finalNextqh,6,6,"W 和12 跨0 1", client, map));
+            add(new Properties("韩式1.5分彩", FourNum66, finalNextqh,6,6,"W 和4 14 跨1 胆1235689", client, map));
         }};
 
         while (true) {
             long start = System.currentTimeMillis();
 
             login(lotteryCore,list.get(0), nextqh); //数据查询
-            LotteryUtil.dataHandle(list, lotteryCore, json, path, "tengxun", logger); // 数据处理
+            LotteryUtil.dataHandle2(list, lotteryCore, json, path, "hanshi1D5", logger); // 数据处理
 
             nextqh++;
             logger.info("--------------------------------------- 执行结束 {}----------------------------------------\n", _sdf.format(new Date()));
 
             long end = System.currentTimeMillis();
             long sjc = (end - start) / 1000; //时间差 秒
-            if (sjc < 30) {
-                Thread.sleep((60 - sjc) / 2 * 1000);
+            if (sjc < 50) {
+                Thread.sleep((90 - sjc) / 2 * 1000);
+            }
+
+            end = System.currentTimeMillis();
+            sjc = (90 - (end - start)) / 1000; //时间差 秒
+
+            if (sjc > 30) {
+                Thread.sleep(sjc / 2 * 1000);
             }
 
             do {
                 end = System.currentTimeMillis();
-            } while (end - start < 60000);
+            } while (end - start < 90000);
 
         }
     }
@@ -102,18 +105,14 @@ public class TengXunFfTask {
     private void login(LotteryCore lotteryCore, Properties properties, int nextqh) throws Exception {
         Integer qh = 0;
         do {
-            Thread.sleep(3000);
+            Thread.sleep(14000);
             json = lotteryCore.query(properties, logger);
             JSONArray datas = json.getJSONArray("data");
             String kjqh = datas.getJSONArray(datas.size() - 1).getString(0);
-            qh = Integer.valueOf(kjqh.split("-")[1]);
+            qh = Integer.valueOf(kjqh);
         } while (nextqh - qh != 0);
 
     }
 
-    @Test
-    public void test() {
-        LotteryUtil.write("测试", "F:\\SPF\\github\\wealth\\log\\tengxun\\2018-09-17\\", "2018-09-17-腾讯分分[和8,10]统计.txt", true);
-    }
-
 }
+

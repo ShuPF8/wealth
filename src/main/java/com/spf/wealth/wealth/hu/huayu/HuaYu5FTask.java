@@ -60,7 +60,7 @@ public class HuaYu5FTask {
         map.put("id","6");
         map.put("pnum","30");
 
-        int nextqh = 186;
+        int nextqh = 131;
         if (nextqh == 1441) {
             nextqh = 1;
         }

@@ -141,4 +141,92 @@ public class LotteryCore {
         return true;
     }
 
+    /**
+     *  数据处理
+     * @param json
+     * @param properties
+     * @param count
+     * @param logger
+     * @return
+     * @throws Exception
+     */
+    public boolean dataHandle2(JSONObject json, Properties properties, int count,  Logger logger) throws Exception {
+        boolean hflag = false, qflag = false;
+        JSONArray datas = json.getJSONArray("data");
+        String kjqh = datas.getJSONArray(datas.size() - 1).getString(0); //开奖期号
+        String kjxn = datas.getJSONArray(datas.size() - 1).getString(1); //开奖号码
+
+        Integer qh = Integer.valueOf(kjqh);
+        int nextqh = properties.getNextqh();
+        if (nextqh - qh == 1) { //是上一期
+            Thread.sleep(5000);
+            json = query(properties, logger); //重新查询
+            return dataHandle(json, properties,count, logger);
+        }
+
+        properties.setNextqh(qh + 1);
+        String q2 = kjxn.substring(0,2);
+        String h2 = kjxn.substring(3,kjxn.length());
+
+        if (count == 1) {
+            logger.info("------------------------------ "+ properties.getName() +"开奖信息为:" + kjqh + " [" + kjxn + "]\n");
+        }
+
+        String title = properties.getName() +"["+ properties.getShtj() + "]";
+        int hcount = properties.getHcount();
+        String myNum = properties.getMyNum();
+        if (!myNum.contains(h2)) {
+            properties.setHlz(0);
+            hcount++;
+            properties.setHcount(hcount);
+            hflag = true;
+            if (properties.gethMaxbzCount() < hcount) {
+                properties.sethMaxbzCount(hcount); //记录最大不中次数
+            }
+            logger.info("------------------------------ "+ properties.getName() +"后二 ["+properties.getShtj()+"] 已有 [ " + hcount + " ] 期不中");
+            if (hcount == properties.gethMax()) {
+                MailSend.sendMail(title + "后二" ,kjqh+" [ "+ kjxn +" ]", properties.getName() +"后二["+properties.getShtj()+"]已有 " + hcount + " 期不中。 投注号码：" + myNum, toMails);
+            }
+        }
+
+        int qcount = properties.getQcount();
+        if (!myNum.contains(q2)) {
+            properties.setQlz(0);
+            qcount++;
+            properties.setQcount(qcount);
+            if (properties.getqMaxbzCount() < qcount) {
+                properties.setqMaxbzCount(qcount); //记录最大不中次数
+            }
+            qflag = true;
+            logger.info("------------------------------ "+ properties.getName() +"前二 [" + properties.getShtj() + "] 已有 [ " + qcount + " ] 期不中");
+            if (qcount == properties.getqMax()) {
+                MailSend.sendMail(title + "前二" ,kjqh+" [ "+ kjxn +" ]", properties.getName() +"前二["+properties.getShtj()+"]已有 " + qcount + " 期不中。 投注号码：" + myNum, toMails);
+            }
+        }
+
+        int hlz = properties.getHlz();
+        if (!hflag) {
+            properties.setHcount(0);
+            hlz++;
+            properties.setHlz(hlz);
+            if (properties.gethMaxlzCount() < hlz) {
+                properties.sethMaxlzCount(hlz); //记录最大中次数
+            }
+        }
+
+        int qlz = properties.getQlz();
+        if (!qflag) {
+            properties.setQcount(0);
+            qlz++;
+            properties.setQlz(qlz);
+            if (properties.getqMaxlzCount() < qlz) {
+                properties.setqMaxlzCount(qlz); //记录最大中次数
+            }
+        }
+
+        //logger.info("------------------------------ 腾讯分分后二连中 : {} 次， 腾讯分分前二连中 ：{} 次",hlz,qlz);
+        //logger.info("\n------------------------------------------------------------ 执行结束 {}---------------------------------------------\n", sdf.format(new Date()));
+        return true;
+    }
+
 }

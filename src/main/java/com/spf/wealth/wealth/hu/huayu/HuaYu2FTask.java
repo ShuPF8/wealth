@@ -60,7 +60,7 @@ public class HuaYu2FTask {
         map.put("id","7");
         map.put("pnum","30");
 
-        int nextqh = 465;
+        int nextqh = 349;
         if (nextqh == 1441) {
             nextqh = 1;
         }
@@ -106,10 +106,10 @@ public class HuaYu2FTask {
         }
     }
 
-    public void login(LotteryCore lotteryCore, Properties properties, int nextqh) throws Exception {
+    private void login(LotteryCore lotteryCore, Properties properties, int nextqh) throws Exception {
         Integer qh = 0;
         do {
-            Thread.sleep(5000);
+            Thread.sleep(8000);
             json = lotteryCore.query(properties, logger);
             JSONArray datas = json.getJSONArray("data");
             String kjqh = datas.getJSONArray(datas.size() - 1).getString(0);
