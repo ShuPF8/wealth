@@ -62,7 +62,7 @@ public class DongJing1D5FTask extends TmallApplicationTests {
         map.put("id","12");
         map.put("pnum","30");
 
-        int nextqh = 656;
+        int nextqh = 763;
         if (nextqh == 1441) {
             nextqh = 1;
         }

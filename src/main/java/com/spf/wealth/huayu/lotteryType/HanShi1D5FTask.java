@@ -62,7 +62,7 @@ public class HanShi1D5FTask extends TmallApplicationTests {
         map.put("id","11");
         map.put("pnum","30");
 
-        int nextqh = 2301988;
+        int nextqh = 2302085;
         int finalNextqh = nextqh;
         List<Properties> list = new ArrayList<Properties>(){{
             add(new Properties("韩式1.5分彩", ThirteenNum66, finalNextqh,6,6,"Q 和9 13 夸2 胆12345678", client, map));

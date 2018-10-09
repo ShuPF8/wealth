@@ -2,6 +2,8 @@ package com.spf.wealth.mapper;
 
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.spf.wealth.model.LotteryDetail;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 /**
  * <p>
@@ -12,5 +14,8 @@ import com.spf.wealth.model.LotteryDetail;
  * @since 2018-10-09
  */
 public interface LotteryDetailMapper extends BaseMapper<LotteryDetail> {
+
+    @Select("select * from lottery_detail where lottery_num=#{num} and create_time =#{date}")
+    LotteryDetail findByNumAndDate(@Param("num") String num, @Param("date") String date);
 
 }

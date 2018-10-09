@@ -62,7 +62,7 @@ public class HuaYuFfTask extends TmallApplicationTests {
         map.put("id","8");
         map.put("pnum","30");
 
-        int nextqh = 982;
+        int nextqh = 1142;
         if (nextqh == 1441) {
             nextqh = 1;
         }
