@@ -83,7 +83,7 @@ public class LotteryDetail extends Model<LotteryDetail> {
 	@TableField("q_max_bz")
 	private Integer qMaxBz;
     /**
-     * 创建时间
+     * 创建时间 yyyy-MM-dd
      */
 	@TableField("create_time")
 	private Date createTime;

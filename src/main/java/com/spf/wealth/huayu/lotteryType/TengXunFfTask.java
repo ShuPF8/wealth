@@ -5,12 +5,15 @@ import com.alibaba.fastjson.JSONObject;
 import com.spf.utils.HttpUtil;
 import com.spf.wealth.base.TmallApplicationTests;
 import com.spf.wealth.huayu.LotteryCore;
+import com.spf.wealth.model.LotteryDetail;
+import com.spf.wealth.service.ILotteryDetailService;
 import com.spf.wealth.utils.LotteryUtil;
 import com.spf.wealth.utils.Properties;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -52,6 +55,9 @@ public class TengXunFfTask extends TmallApplicationTests {
     private JSONObject json = new JSONObject();
 
     private Logger logger = LogManager.getLogger(TengXunFfTask.class);
+
+    @Autowired
+    private ILotteryDetailService iLotteryDetailService;
 
     @Test
     public void execute() throws Exception {
@@ -110,6 +116,36 @@ public class TengXunFfTask extends TmallApplicationTests {
             String kjqh = datas.getJSONArray(datas.size() - 1).getString(0);
             qh = Integer.valueOf(kjqh.split("-")[1]);
         } while (nextqh - qh != 0);
+
+    }
+
+    private void dataHandle(List<Properties> propertiess, LotteryCore lotteryCore) {
+        for (int i = 0; i < propertiess.size(); i++) {
+            Properties properties = propertiess.get(i);
+            try {
+                lotteryCore.dataHandle(json, properties, i + 1, logger);
+            } catch (Exception e) {
+                logger.error(e.getMessage());
+            }
+
+            long time = System.currentTimeMillis();
+            if ((properties.getHcount() >= 4 || properties.getQcount() >= 4) ||
+                    ((properties.getPrevHMaxLzCount() < properties.gethMaxlzCount() || properties.getPrevQMaxLzCount() < properties.getqMaxlzCount())
+                            && (time - properties.getPrevWireTime()) > (3 * 50 * 1000))) { //记录连续四次不中的的日志
+                properties.setPrevWireTime(time);
+                properties.setPrevHMaxBuCount(properties.gethMaxbzCount());
+                properties.setPrevHMaxLzCount(properties.gethMaxlzCount());
+                properties.setPrevQMaxBuCount(properties.getqMaxbzCount());
+                properties.setPrevQMaxLzCount(properties.getqMaxlzCount());
+
+                // todo 保存数据库
+            }
+
+        }
+    }
+
+    private void saveLotteryDetail(Properties properties) {
+        LotteryDetail detail = null;
 
     }
 
