@@ -62,17 +62,19 @@ public class HanShi1D5FTask extends TmallApplicationTests {
         map.put("id","11");
         map.put("pnum","30");
 
-        int nextqh = 2302085;
+        int q_bz_num = 7;
+        int h_bz_num = 7;
+        int nextqh = 2302767;
         int finalNextqh = nextqh;
         List<Properties> list = new ArrayList<Properties>(){{
-            add(new Properties("韩式1.5分彩", ThirteenNum66, finalNextqh,6,6,"Q 和9 13 夸2 胆12345678", client, map));
-            add(new Properties("韩式1.5分彩", EightNum66, finalNextqh,6,6,"Q 和8 10 跨0 定0 胆012345679", client, map));
-            add(new Properties("韩式1.5分彩", ElevenNum66, finalNextqh,6,6,"Q 和11 夸1 胆23456789 定6", client, map));
-            add(new Properties("韩式1.5分彩", SevenNum66, finalNextqh,6,6,"Q 和7 夸3 定2 胆1245689", client, map));
-            add(new Properties("韩式1.5分彩", sixNum66, finalNextqh,6,6,"Q 和6 跨0 4 定9", client, map));
-            add(new Properties("韩式1.5分彩", TwelveNum66, finalNextqh,6,6,"W 和12 跨0 5 定1", client, map));
-            add(new Properties("韩式1.5分彩", Twelve2Num66, finalNextqh,6,6,"W 和12 跨0 1", client, map));
-            add(new Properties("韩式1.5分彩", FourNum66, finalNextqh,6,6,"W 和4 14 跨1 胆1235689", client, map));
+            add(new Properties("韩式1.5分彩", ThirteenNum66, finalNextqh, h_bz_num, q_bz_num,"Q 和9 13 夸2 胆12345678", client, map));
+            add(new Properties("韩式1.5分彩", EightNum66, finalNextqh, h_bz_num, q_bz_num,"Q 和8 10 跨0 定0 胆012345679", client, map));
+            add(new Properties("韩式1.5分彩", ElevenNum66, finalNextqh, h_bz_num, q_bz_num,"Q 和11 夸1 胆23456789 定6", client, map));
+            add(new Properties("韩式1.5分彩", SevenNum66, finalNextqh,h_bz_num, q_bz_num,"Q 和7 夸3 定2 胆1245689", client, map));
+            add(new Properties("韩式1.5分彩", sixNum66, finalNextqh, h_bz_num, q_bz_num,"Q 和6 跨0 4 定9", client, map));
+            add(new Properties("韩式1.5分彩", TwelveNum66, finalNextqh, h_bz_num, q_bz_num,"W 和12 跨0 5 定1", client, map));
+            add(new Properties("韩式1.5分彩", Twelve2Num66, finalNextqh, h_bz_num, q_bz_num,"W 和12 跨0 1", client, map));
+            add(new Properties("韩式1.5分彩", FourNum66, finalNextqh, h_bz_num, q_bz_num,"W 和4 14 跨1 胆1235689", client, map));
         }};
 
         while (true) {
