@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -38,17 +39,22 @@ public class EntFileTest extends TmallApplicationTests {
         detail.setTypeName("腾讯分分");
         detail.setFiveHBz(1);
         detail.setFiveQBz(1);
-        detail.setFourHBz(1);
-        detail.setFourQBz(1);
         detail.sethMaxBz(1);
         detail.setLotteryNum("520");
         detail.setqMaxBz(1);
         detail.setShtj("520");
         detail.setSixHBz(1);
         detail.setSixQBz(1);
-        detail.setTitle("59420");
-        detail.setCreateTime(new SimpleDateFormat("yyyy-MM-dd").parse("2018-10-10"));
+        detail.setCreateTime("2018-10-10");
         detailService.insert(detail);
+    }
+
+    @Test
+    public void update() {
+        String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        LotteryDetail detail = detailService.findByNumAndDate("520", "2018-10-10", "腾讯分分");
+        detail.setSevenQBz(10);
+        detailService.updateById(detail);
     }
 
 }

@@ -15,7 +15,7 @@ import org.apache.ibatis.annotations.Select;
  */
 public interface LotteryDetailMapper extends BaseMapper<LotteryDetail> {
 
-    @Select("select * from lottery_detail where lottery_num=#{num} and create_time =#{date}")
-    LotteryDetail findByNumAndDate(@Param("num") String num, @Param("date") String date);
+    @Select("select * from lottery_detail where lottery_num=#{num} and create_time =#{date} and type_name=#{name} ")
+    LotteryDetail findByNumAndDate(@Param("num") String num, @Param("date") String date, @Param("name") String name);
 
 }

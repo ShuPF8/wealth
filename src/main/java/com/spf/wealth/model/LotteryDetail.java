@@ -7,7 +7,6 @@ import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * <p>
@@ -30,10 +29,6 @@ public class LotteryDetail extends Model<LotteryDetail> {
 	@TableField("type_name")
 	private String typeName;
     /**
-     * 彩票号码唯一标识
-     */
-	private String title;
-    /**
      * 彩票号码
      */
 	@TableField("lottery_num")
@@ -43,51 +38,60 @@ public class LotteryDetail extends Model<LotteryDetail> {
      */
 	private String shtj;
     /**
-     * 后四次后不中
-     */
-	@TableField("four_h_bz")
-	private Integer fourHBz;
-    /**
      * 后五次后不中
      */
 	@TableField("five_h_bz")
-	private Integer fiveHBz;
+	private Integer fiveHBz = 0;
     /**
      * 后6次不中次数
      */
 	@TableField("six_h_bz")
-	private Integer sixHBz;
+	private Integer sixHBz = 0;
+	/**
+	 * 后7次后不中
+	 */
+	@TableField("seven_h_bz")
+	private Integer sevenHBz = 0;
+	/**
+	 * 后8次不中
+	 */
+	@TableField("eight_h_bz")
+	private Integer eightHBz = 0;
     /**
      * 后最大不中
      */
 	@TableField("h_max_bz")
-	private Integer hMaxBz;
-    /**
-     * 前四次不中
-     */
-	@TableField("four_q_bz")
-	private Integer fourQBz;
+	private Integer hMaxBz = 0;
     /**
      * 前5次不中
      */
 	@TableField("five_q_bz")
-	private Integer fiveQBz;
+	private Integer fiveQBz = 0;
     /**
      * 前6次不中次数
      */
 	@TableField("six_q_bz")
-	private Integer sixQBz;
+	private Integer sixQBz = 0;
+	/**
+	 * 前7次不中
+	 */
+	@TableField("seven_q_bz")
+	private Integer sevenQBz = 0;
+	/**
+	 * 前8次不中
+	 */
+	@TableField("eight_q_bz")
+	private Integer eightQBz = 0;
     /**
      * 前最大不中
      */
 	@TableField("q_max_bz")
-	private Integer qMaxBz;
+	private Integer qMaxBz = 0;
     /**
      * 创建时间 yyyy-MM-dd
      */
 	@TableField("create_time")
-	private Date createTime;
-
+	private String createTime;
 
 	public Long getId() {
 		return id;
@@ -103,14 +107,6 @@ public class LotteryDetail extends Model<LotteryDetail> {
 
 	public void setTypeName(String typeName) {
 		this.typeName = typeName;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
 	}
 
 	public String getLotteryNum() {
@@ -129,12 +125,20 @@ public class LotteryDetail extends Model<LotteryDetail> {
 		this.shtj = shtj;
 	}
 
-	public Integer getFourHBz() {
-		return fourHBz;
+	public Integer getEightHBz() {
+		return eightHBz;
 	}
 
-	public void setFourHBz(Integer fourHBz) {
-		this.fourHBz = fourHBz;
+	public void setEightHBz(Integer eightHBz) {
+		this.eightHBz = eightHBz;
+	}
+
+	public Integer getEightQBz() {
+		return eightQBz;
+	}
+
+	public void setEightQBz(Integer eightQBz) {
+		this.eightQBz = eightQBz;
 	}
 
 	public Integer getFiveHBz() {
@@ -161,12 +165,20 @@ public class LotteryDetail extends Model<LotteryDetail> {
 		this.hMaxBz = hMaxBz;
 	}
 
-	public Integer getFourQBz() {
-		return fourQBz;
+	public Integer getSevenHBz() {
+		return sevenHBz;
 	}
 
-	public void setFourQBz(Integer fourQBz) {
-		this.fourQBz = fourQBz;
+	public void setSevenHBz(Integer sevenHBz) {
+		this.sevenHBz = sevenHBz;
+	}
+
+	public Integer getSevenQBz() {
+		return sevenQBz;
+	}
+
+	public void setSevenQBz(Integer sevenQBz) {
+		this.sevenQBz = sevenQBz;
 	}
 
 	public Integer getFiveQBz() {
@@ -193,11 +205,11 @@ public class LotteryDetail extends Model<LotteryDetail> {
 		this.qMaxBz = qMaxBz;
 	}
 
-	public Date getCreateTime() {
+	public String getCreateTime() {
 		return createTime;
 	}
 
-	public void setCreateTime(Date createTime) {
+	public void setCreateTime(String createTime) {
 		this.createTime = createTime;
 	}
 
@@ -209,20 +221,21 @@ public class LotteryDetail extends Model<LotteryDetail> {
 	@Override
 	public String toString() {
 		return "LotteryDetail{" +
-			"id=" + id +
-			", typeName=" + typeName +
-			", title=" + title +
-			", lotteryNum=" + lotteryNum +
-			", shtj=" + shtj +
-			", fourHBz=" + fourHBz +
-			", fiveHBz=" + fiveHBz +
-			", sixHBz=" + sixHBz +
-			", hMaxBz=" + hMaxBz +
-			", fourQBz=" + fourQBz +
-			", fiveQBz=" + fiveQBz +
-			", sixQBz=" + sixQBz +
-			", qMaxBz=" + qMaxBz +
-			", createTime=" + createTime +
-			"}";
+				"id=" + id +
+				", typeName='" + typeName + '\'' +
+				", lotteryNum='" + lotteryNum + '\'' +
+				", shtj='" + shtj + '\'' +
+				", fiveHBz=" + fiveHBz +
+				", sixHBz=" + sixHBz +
+				", sevenHBz=" + sevenHBz +
+				", eightHBz=" + eightHBz +
+				", hMaxBz=" + hMaxBz +
+				", fiveQBz=" + fiveQBz +
+				", sixQBz=" + sixQBz +
+				", sevenQBz=" + sevenQBz +
+				", eightQBz=" + eightQBz +
+				", qMaxBz=" + qMaxBz +
+				", createTime='" + createTime + '\'' +
+				'}';
 	}
 }
