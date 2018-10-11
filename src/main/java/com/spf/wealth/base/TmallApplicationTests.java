@@ -121,8 +121,10 @@ public class TmallApplicationTests {
             case 8:
                 detail.setEightHBz(detail.getEightHBz() + 1);
                 break;
-            default:
-                detail.sethMaxBz(detail.gethMaxBz() + 1);
+        }
+
+        if (properties.getHcount() > 8) {
+            detail.sethMaxBz(properties.gethMaxbzCount());
         }
 
         switch (properties.getQcount()) {
@@ -138,8 +140,10 @@ public class TmallApplicationTests {
             case 8:
                 detail.setEightQBz(detail.getEightQBz() + 1);
                 break;
-            default:
-                detail.setqMaxBz(detail.getqMaxBz() + 1);
+        }
+
+        if (properties.getQcount() > 8) {
+            detail.setqMaxBz(properties.getqMaxbzCount());
         }
 
         if (detail.getId() != null) {
