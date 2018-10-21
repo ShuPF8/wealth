@@ -3,7 +3,9 @@ package com.spf.wealth.base;
 import com.alibaba.fastjson.JSONObject;
 import com.spf.wealth.huayu.LotteryCore;
 import com.spf.wealth.model.LotteryDetail;
+import com.spf.wealth.model.LotteryHeDetail;
 import com.spf.wealth.service.ILotteryDetailService;
+import com.spf.wealth.service.ILotteryHeDatailService;
 import com.spf.wealth.utils.Properties;
 import org.apache.logging.log4j.Logger;
 import org.junit.After;
@@ -31,6 +33,9 @@ public class TmallApplicationTests {
 
     @Autowired
     public ILotteryDetailService detailService;
+
+    @Autowired
+    public ILotteryHeDatailService heDatailService;
 
     public String path = this.getClass().getClassLoader().getResource("").getPath();
 
@@ -95,6 +100,31 @@ public class TmallApplicationTests {
         }
     }
 
+    public void dataHandleHe(JSONObject json, List<Properties> propertiess, LotteryCore lotteryCore, int type, Logger logger) throws Exception {
+        for (int i = 0; i < propertiess.size(); i++) {
+            Properties properties = propertiess.get(i);
+
+            if (type == 1) {
+                lotteryCore.dataHandleHe(json, properties, i + 1, logger);
+            } else if (type == 2 ) {
+                lotteryCore.dataHandleHe2(json, properties, i + 1, logger);
+            }
+
+            long time = System.currentTimeMillis();
+            if (properties.getHdy() > 4 || properties.getHxy() > 4 || properties.getQdy() > 4 || properties.getQxy() > 4) { //记录连续四次不中的的日志
+                properties.setPrevWireTime(time);
+                properties.setPrevHMaxBuCount(properties.gethMaxbzCount());
+                properties.setPrevHMaxLzCount(properties.gethMaxlzCount());
+                properties.setPrevQMaxBuCount(properties.getqMaxbzCount());
+                properties.setPrevQMaxLzCount(properties.getqMaxlzCount());
+
+                // 保存数据库
+                this.lotteryHeDetailHandle(properties);
+            }
+
+        }
+    }
+
     private void lotteryDetailHandle(Properties properties) {
         String num = properties.getMyNum();
         String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
@@ -150,6 +180,77 @@ public class TmallApplicationTests {
             detailService.updateById(detail);
         } else {
             detailService.insert(detail);
+        }
+
+    }
+
+    private void lotteryHeDetailHandle(Properties properties) {
+        String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        String name = properties.getName();
+        LotteryHeDetail heDetail = heDatailService.findByNumAndDate(date, name);
+        if (heDetail == null) {
+            heDetail = new LotteryHeDetail();
+            heDetail.setName(properties.getName());
+            heDetail.setDate(date);
+        }
+
+        switch (properties.getHdy()) {
+            case 5:
+                heDetail.sethDyFive(heDetail.gethDyFive() + 1);
+                break;
+            case 6:
+                heDetail.sethDySix(heDetail.gethDySix() + 1);
+                break;
+        }
+
+        if (properties.getHdy() > 6) {
+            heDetail.sethDyMax(properties.getHdy());
+        }
+
+        switch (properties.getHxy()) {
+            case 5:
+                heDetail.sethXyFive(heDetail.gethXyFive() + 1);
+                break;
+            case 6:
+                heDetail.sethXySix(heDetail.gethXySix() + 1);
+                break;
+        }
+
+        if (properties.getHxy() > 6) {
+            heDetail.sethXyMax(properties.getHxy());
+        }
+
+        switch (properties.getQdy()) {
+            case 5:
+                heDetail.setqDyFive(heDetail.getqDyFive() + 1);
+                break;
+            case 6:
+                heDetail.setqDySix(heDetail.getqDySix() + 1);
+                break;
+        }
+
+        if (properties.getQdy() > 6) {
+            heDetail.setqDyMax(properties.getQdy());
+        }
+
+        switch (properties.getQxy()) {
+            case 5:
+                heDetail.setqXyFive(heDetail.getqXyFive() + 1);
+                break;
+            case 6:
+                heDetail.setqXySix(heDetail.getqXySix() + 1);
+                break;
+        }
+
+        if (properties.getHxy() > 6) {
+            heDetail.setqXyMax(properties.getHxy());
+        }
+
+
+        if (heDetail.getId() != null) {
+            heDatailService.updateById(heDetail);
+        } else {
+            heDatailService.insert(heDetail);
         }
 
     }

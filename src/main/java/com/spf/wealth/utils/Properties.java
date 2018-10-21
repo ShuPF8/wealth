@@ -48,6 +48,14 @@ public class Properties {
 
     private String shtj = ""; //杀号条件
 
+    private int hdy = 0;
+
+    private int hxy = 0;
+
+    private int qdy = 0;
+
+    private int qxy = 0;
+
     private CloseableHttpClient client;
     private Map<String, Object> params;
 
@@ -239,5 +247,37 @@ public class Properties {
 
     public void setShtj(String shtj) {
         this.shtj = shtj;
+    }
+
+    public int getHdy() {
+        return hdy;
+    }
+
+    public void setHdy(int hdy) {
+        this.hdy = hdy;
+    }
+
+    public int getHxy() {
+        return hxy;
+    }
+
+    public void setHxy(int hxy) {
+        this.hxy = hxy;
+    }
+
+    public int getQdy() {
+        return qdy;
+    }
+
+    public void setQdy(int qdy) {
+        this.qdy = qdy;
+    }
+
+    public int getQxy() {
+        return qxy;
+    }
+
+    public void setQxy(int qxy) {
+        this.qxy = qxy;
     }
 }

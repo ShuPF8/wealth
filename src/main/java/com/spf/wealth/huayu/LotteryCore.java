@@ -230,4 +230,113 @@ public class LotteryCore {
         return true;
     }
 
+
+    /**
+     *  数据处理
+     * @param json
+     * @param properties
+     * @param count
+     * @param logger
+     * @return
+     * @throws Exception
+     */
+    public boolean dataHandleHe(JSONObject json, Properties properties, int count,  Logger logger) throws Exception {
+        JSONArray datas = json.getJSONArray("data");
+        String kjqh = datas.getJSONArray(datas.size() - 1).getString(0);
+        Integer qh = Integer.valueOf(kjqh.split("-")[1]);
+        String kjxn = datas.getJSONArray(datas.size() - 1).getString(1);
+
+        int nextqh = properties.getNextqh();
+        if (nextqh - qh == 1) { //是上一期
+            Thread.sleep(5000);
+            json = query(properties, logger); //重新查询
+            return dataHandle(json, properties,count, logger);
+        }
+
+        properties.setNextqh(qh + 1);
+        this.heCommon(properties,kjxn, kjqh, count, logger);
+
+        return true;
+    }
+
+    /**
+     *  数据处理
+     * @param json
+     * @param properties
+     * @param count
+     * @param logger
+     * @return
+     * @throws Exception
+     */
+    public boolean dataHandleHe2(JSONObject json, Properties properties, int count,  Logger logger) throws Exception {
+        JSONArray datas = json.getJSONArray("data");
+        String kjqh = datas.getJSONArray(datas.size() - 1).getString(0); //开奖期号
+        String kjxn = datas.getJSONArray(datas.size() - 1).getString(1); //开奖号码
+
+        Integer qh = Integer.valueOf(kjqh);
+        int nextqh = properties.getNextqh();
+        if (nextqh - qh == 1) { //是上一期
+            Thread.sleep(5000);
+            json = query(properties, logger); //重新查询
+            return dataHandle(json, properties,count, logger);
+        }
+
+        properties.setNextqh(qh + 1);
+        this.heCommon(properties,kjxn, kjqh, count, logger);
+
+        return true;
+    }
+
+    private void heCommon(Properties properties, String kjxn, String kjqh, int count, Logger logger) throws Exception {
+        String q2 = kjxn.substring(0,2);
+        int q_first = Integer.valueOf(q2.substring(0,1));
+        int q_last = Integer.valueOf(q2.substring(1,2));
+        int qHe = q_first + q_last;
+        String h2 = kjxn.substring(3,kjxn.length());
+        int h_first = Integer.valueOf(h2.substring(0,1));
+        int h_last = Integer.valueOf(h2.substring(1,2));
+        int hHe = h_first + h_last;
+
+        if (count == 1) {
+            logger.info("------------------------------ "+ properties.getName() +"开奖信息为:" + kjqh + " [" + kjxn + "]\n");
+        }
+
+        String name = properties.getName();
+        if (hHe >= 10) {
+            properties.setHxy(0);
+            properties.setHdy(properties.getHdy() + 1);
+            logger.info("后二和大于10 [ {} ] 不中", properties.getHdy());
+            if (properties.getHdy() == properties.gethMax()) {
+                MailSend.sendMail(name + "后二 和大于10" ,kjqh, "", toMails);
+            }
+        }
+
+        if (hHe < 10) {
+            properties.setHdy(0);
+            properties.setHxy(properties.getHxy() + 1);
+            logger.info("后二和小于10 [ {} ] 不中", properties.getHxy());
+            if (properties.getHxy() == properties.gethMax()) {
+                MailSend.sendMail(name + "后二 和小于10" ,kjqh, "", toMails);
+            }
+        }
+
+        if (qHe >= 10) {
+            properties.setQxy(0);
+            properties.setQdy(properties.getQdy() + 1);
+            logger.info("前二和大于10 [ {} ] 不中", properties.getQdy());
+            if (properties.getQdy() == properties.gethMax()) {
+                MailSend.sendMail(name + "前二 和大于10" ,kjqh, "", toMails);
+            }
+        }
+
+        if (qHe < 10) {
+            properties.setQdy(0);
+            properties.setQxy(properties.getQxy() + 1);
+            logger.info("前二和小于10 [ {} ] 不中", properties.getQxy());
+            if (properties.getQxy() == properties.gethMax()) {
+                MailSend.sendMail(name + "前二 和小于10" ,kjqh, "", toMails);
+            }
+        }
+    }
+
 }

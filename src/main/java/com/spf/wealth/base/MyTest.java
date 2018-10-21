@@ -1,7 +1,9 @@
 package com.spf.wealth.base;
 
 import com.spf.wealth.model.LotteryDetail;
+import com.spf.wealth.model.LotteryHeDetail;
 import com.spf.wealth.service.ILotteryDetailService;
+import com.spf.wealth.service.ILotteryHeDatailService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -18,10 +20,15 @@ public class MyTest extends TmallApplicationTests {
     @Autowired
     private ILotteryDetailService detailService;
 
+    @Autowired
+    private ILotteryHeDatailService heDatailService;
+
     @Test
     public void test() throws UnsupportedEncodingException {
-        System.out.println("中文");
-        System.out.println("中文".getBytes("utf-8"));
+        LotteryHeDetail heDetail = heDatailService.findByNumAndDate("2018-10-21", "腾讯纷纷");
+        System.out.println(heDetail);
     }
+
+
 
 }

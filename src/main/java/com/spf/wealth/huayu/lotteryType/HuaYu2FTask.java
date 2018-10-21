@@ -34,9 +34,9 @@ public class HuaYu2FTask extends TmallApplicationTests {
         map.put("id","7");
         map.put("pnum","30");
 
-        int q_bz_num = 6;
-        int h_bz_num = 6;
-        int nextqh = 469;
+        int q_bz_num = 8;
+        int h_bz_num = 8;
+        int nextqh = 377;
         if (nextqh == 1441) {
             nextqh = 1;
         }
@@ -44,13 +44,13 @@ public class HuaYu2FTask extends TmallApplicationTests {
         int finalNextqh = nextqh;
         List<Properties> list = new ArrayList<Properties>(){{
             add(new Properties("华宇二分分", ThirteenNum66, finalNextqh, h_bz_num, q_bz_num,"Q 和9 13 夸2 胆12345678", client, map));
-            add(new Properties("华宇二分分", EightNum66, finalNextqh, h_bz_num, q_bz_num,"Q 和8 10 跨0 定0 胆012345679", client, map));
-            add(new Properties("华宇二分分", ElevenNum66, finalNextqh, h_bz_num, q_bz_num,"Q 和11 夸1 胆23456789 定6", client, map));
-            add(new Properties("华宇二分分", SevenNum66, finalNextqh, h_bz_num, q_bz_num,"Q 和7 夸3 定2 胆1245689", client, map));
-            add(new Properties("华宇二分分", sixNum66, finalNextqh, h_bz_num, q_bz_num,"Q 和6 跨0 4 定9", client, map));
-            add(new Properties("华宇二分分", TwelveNum66, finalNextqh, h_bz_num, q_bz_num,"W 和12 跨0 5 定1", client, map));
-            add(new Properties("华宇二分分", Twelve2Num66, finalNextqh, h_bz_num, q_bz_num,"W 和12 跨0 1", client, map));
-            add(new Properties("华宇二分分", FourNum66, finalNextqh, h_bz_num, q_bz_num,"W 和4 14 跨1 胆1235689", client, map));
+//            add(new Properties("华宇二分分", EightNum66, finalNextqh, h_bz_num, q_bz_num,"Q 和8 10 跨0 定0 胆012345679", client, map));
+//            add(new Properties("华宇二分分", ElevenNum66, finalNextqh, h_bz_num, q_bz_num,"Q 和11 夸1 胆23456789 定6", client, map));
+//            add(new Properties("华宇二分分", SevenNum66, finalNextqh, h_bz_num, q_bz_num,"Q 和7 夸3 定2 胆1245689", client, map));
+//            add(new Properties("华宇二分分", sixNum66, finalNextqh, h_bz_num, q_bz_num,"Q 和6 跨0 4 定9", client, map));
+//            add(new Properties("华宇二分分", TwelveNum66, finalNextqh, h_bz_num, q_bz_num,"W 和12 跨0 5 定1", client, map));
+//            add(new Properties("华宇二分分", Twelve2Num66, finalNextqh, h_bz_num, q_bz_num,"W 和12 跨0 1", client, map));
+//            add(new Properties("华宇二分分", FourNum66, finalNextqh, h_bz_num, q_bz_num,"W 和4 14 跨1 胆1235689", client, map));
         }};
 
         while (true) {
@@ -58,7 +58,7 @@ public class HuaYu2FTask extends TmallApplicationTests {
 
             login(lotteryCore,list.get(0), nextqh); //数据查询
             //LotteryUtil.dataHandle(list, lotteryCore, json, path, "huayu2f", logger); // 数据处理
-            super.dataHandle(json, list,lotteryCore, 1, logger); // 数据处理
+            super.dataHandleHe(json, list,lotteryCore, 1, logger); // 数据处理
 
             nextqh++;
             logger.info("--------------------------------------- 执行结束 {}----------------------------------------\n", _sdf.format(new Date()));
