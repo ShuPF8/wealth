@@ -34,9 +34,9 @@ public class DongJing1D5FTask extends TmallApplicationTests {
         map.put("id","12");
         map.put("pnum","30");
 
-        int q_bz_num = 8;
-        int h_bz_num = 8;
-        int nextqh = 502;
+        int q_bz_num = 9;
+        int h_bz_num = 9;
+        int nextqh = 562;
         if (nextqh == 1441) {
             nextqh = 1;
         }

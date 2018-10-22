@@ -9,27 +9,35 @@ public class LotteryHeDetail {
 
     private String name;
 
-    private int hDyFive = 0;
+    private int hDySeven = 0;
 
-    private int hDySix = 0;
+    private int hDyEight = 0;
+
+    private int hDyNine = 0;
 
     private int hDyMax = 0;
 
-    private int hXyFive = 0;
+    private int hXySeven = 0;
 
-    private int hXySix = 0;
+    private int hXyEight = 0;
+
+    private int hXyNine = 0;
 
     private int hXyMax = 0;
 
-    private int qDyFive = 0;
+    private int qDySeven = 0;
 
-    private int qDySix = 0;
+    private int qDyEight = 0;
+
+    private int qDyNine = 0;
 
     private int qDyMax = 0;
 
-    private int qXyFive = 0;
+    private int qXySeven = 0;
 
-    private int qXySix = 0;
+    private int qXyEight = 0;
+
+    private int qXyNine = 0;
 
     private int qXyMax = 0;
 
@@ -51,20 +59,28 @@ public class LotteryHeDetail {
         this.name = name;
     }
 
-    public int gethDyFive() {
-        return hDyFive;
+    public int gethDySeven() {
+        return hDySeven;
     }
 
-    public void sethDyFive(int hDyFive) {
-        this.hDyFive = hDyFive;
+    public void sethDySeven(int hDySeven) {
+        this.hDySeven = hDySeven;
     }
 
-    public int gethDySix() {
-        return hDySix;
+    public int gethDyEight() {
+        return hDyEight;
     }
 
-    public void sethDySix(int hDySix) {
-        this.hDySix = hDySix;
+    public void sethDyEight(int hDyEight) {
+        this.hDyEight = hDyEight;
+    }
+
+    public int gethDyNine() {
+        return hDyNine;
+    }
+
+    public void sethDyNine(int hDyNine) {
+        this.hDyNine = hDyNine;
     }
 
     public int gethDyMax() {
@@ -75,20 +91,28 @@ public class LotteryHeDetail {
         this.hDyMax = hDyMax;
     }
 
-    public int gethXyFive() {
-        return hXyFive;
+    public int gethXySeven() {
+        return hXySeven;
     }
 
-    public void sethXyFive(int hXyFive) {
-        this.hXyFive = hXyFive;
+    public void sethXySeven(int hXySeven) {
+        this.hXySeven = hXySeven;
     }
 
-    public int gethXySix() {
-        return hXySix;
+    public int gethXyEight() {
+        return hXyEight;
     }
 
-    public void sethXySix(int hXySix) {
-        this.hXySix = hXySix;
+    public void sethXyEight(int hXyEight) {
+        this.hXyEight = hXyEight;
+    }
+
+    public int gethXyNine() {
+        return hXyNine;
+    }
+
+    public void sethXyNine(int hXyNine) {
+        this.hXyNine = hXyNine;
     }
 
     public int gethXyMax() {
@@ -99,20 +123,28 @@ public class LotteryHeDetail {
         this.hXyMax = hXyMax;
     }
 
-    public int getqDyFive() {
-        return qDyFive;
+    public int getqDySeven() {
+        return qDySeven;
     }
 
-    public void setqDyFive(int qDyFive) {
-        this.qDyFive = qDyFive;
+    public void setqDySeven(int qDySeven) {
+        this.qDySeven = qDySeven;
     }
 
-    public int getqDySix() {
-        return qDySix;
+    public int getqDyEight() {
+        return qDyEight;
     }
 
-    public void setqDySix(int qDySix) {
-        this.qDySix = qDySix;
+    public void setqDyEight(int qDyEight) {
+        this.qDyEight = qDyEight;
+    }
+
+    public int getqDyNine() {
+        return qDyNine;
+    }
+
+    public void setqDyNine(int qDyNine) {
+        this.qDyNine = qDyNine;
     }
 
     public int getqDyMax() {
@@ -123,20 +155,28 @@ public class LotteryHeDetail {
         this.qDyMax = qDyMax;
     }
 
-    public int getqXyFive() {
-        return qXyFive;
+    public int getqXySeven() {
+        return qXySeven;
     }
 
-    public void setqXyFive(int qXyFive) {
-        this.qXyFive = qXyFive;
+    public void setqXySeven(int qXySeven) {
+        this.qXySeven = qXySeven;
     }
 
-    public int getqXySix() {
-        return qXySix;
+    public int getqXyEight() {
+        return qXyEight;
     }
 
-    public void setqXySix(int qXySix) {
-        this.qXySix = qXySix;
+    public void setqXyEight(int qXyEight) {
+        this.qXyEight = qXyEight;
+    }
+
+    public int getqXyNine() {
+        return qXyNine;
+    }
+
+    public void setqXyNine(int qXyNine) {
+        this.qXyNine = qXyNine;
     }
 
     public int getqXyMax() {
@@ -160,17 +200,21 @@ public class LotteryHeDetail {
         return "LotteryHeDetail{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", hDyFive=" + hDyFive +
-                ", hDySix=" + hDySix +
+                ", hDySeven=" + hDySeven +
+                ", hDyEight=" + hDyEight +
+                ", hDyNine=" + hDyNine +
                 ", hDyMax=" + hDyMax +
-                ", hXyFive=" + hXyFive +
-                ", hXySix=" + hXySix +
+                ", hXySeven=" + hXySeven +
+                ", hXyEight=" + hXyEight +
+                ", hXyNine=" + hXyNine +
                 ", hXyMax=" + hXyMax +
-                ", qDyFive=" + qDyFive +
-                ", qDySix=" + qDySix +
+                ", qDySeven=" + qDySeven +
+                ", qDyEight=" + qDyEight +
+                ", qDyNine=" + qDyNine +
                 ", qDyMax=" + qDyMax +
-                ", qXyFive=" + qXyFive +
-                ", qXySix=" + qXySix +
+                ", qXySeven=" + qXySeven +
+                ", qXyEight=" + qXyEight +
+                ", qXyNine=" + qXyNine +
                 ", qXyMax=" + qXyMax +
                 ", date='" + date + '\'' +
                 '}';

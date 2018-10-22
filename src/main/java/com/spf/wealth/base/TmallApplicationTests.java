@@ -195,55 +195,67 @@ public class TmallApplicationTests {
         }
 
         switch (properties.getHdy()) {
-            case 5:
-                heDetail.sethDyFive(heDetail.gethDyFive() + 1);
+            case 7:
+                heDetail.sethDySeven(heDetail.getqDySeven() + 1);
                 break;
-            case 6:
-                heDetail.sethDySix(heDetail.gethDySix() + 1);
+            case 8:
+                heDetail.sethDyEight(heDetail.gethDyEight() + 1);
+                break;
+            case 9:
+                heDetail.sethDyNine(heDetail.gethDyNine() + 1);
                 break;
         }
 
-        if (properties.getHdy() > 6) {
+        if (properties.getHdy() > 9) {
             heDetail.sethDyMax(properties.getHdy());
         }
 
         switch (properties.getHxy()) {
-            case 5:
-                heDetail.sethXyFive(heDetail.gethXyFive() + 1);
+            case 7:
+                heDetail.sethXySeven(heDetail.gethXySeven() + 1);
                 break;
-            case 6:
-                heDetail.sethXySix(heDetail.gethXySix() + 1);
+            case 8:
+                heDetail.sethXyEight(heDetail.gethXyEight() + 1);
+                break;
+            case 9:
+                heDetail.sethXyNine(heDetail.gethXyNine() + 1);
                 break;
         }
 
-        if (properties.getHxy() > 6) {
+        if (properties.getHxy() > 9) {
             heDetail.sethXyMax(properties.getHxy());
         }
 
         switch (properties.getQdy()) {
-            case 5:
-                heDetail.setqDyFive(heDetail.getqDyFive() + 1);
+            case 7:
+                heDetail.setqDySeven(heDetail.getqDySeven() + 1);
                 break;
-            case 6:
-                heDetail.setqDySix(heDetail.getqDySix() + 1);
+            case 8:
+                heDetail.setqDyEight(heDetail.getqDyEight() + 1);
+                break;
+            case 9:
+                heDetail.setqDyNine(heDetail.gethDyNine() + 1);
                 break;
         }
 
-        if (properties.getQdy() > 6) {
+        if (properties.getQdy() > 9) {
             heDetail.setqDyMax(properties.getQdy());
         }
 
         switch (properties.getQxy()) {
-            case 5:
-                heDetail.setqXyFive(heDetail.getqXyFive() + 1);
+            case 7:
+                heDetail.setqXySeven(heDetail.getqXySeven() + 1);
                 break;
-            case 6:
-                heDetail.setqXySix(heDetail.getqXySix() + 1);
+            case 8:
+                heDetail.setqXyEight(heDetail.getqXyEight() + 1);
+                break;
+            case 9:
+                heDetail.setqXyNine(heDetail.getqXyNine() + 1);
                 break;
         }
 
-        if (properties.getHxy() > 6) {
-            heDetail.setqXyMax(properties.getHxy());
+        if (properties.getQxy() > 9) {
+            heDetail.setqXyMax(properties.getQxy());
         }
 
 
