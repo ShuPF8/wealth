@@ -10,6 +10,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.logging.log4j.Logger;
+import org.junit.Test;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -23,8 +24,8 @@ public class LotteryCore {
 
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
 
-    private String[] toMails = (Integer.valueOf((new SimpleDateFormat("dd")).format(new Date())) % 2) == 0 ?
-            new String[]{"517292069@qq.com"} : new String[]{"1215852831@qq.com"};
+    private String[] toMails = new String[]{"517292069@qq.com"};
+             //: new String[]{"1215852831@qq.com"};
 
     public LotteryCore(CloseableHttpClient client, String url, Logger logger) {
         try {
@@ -302,39 +303,39 @@ public class LotteryCore {
         }
 
         String name = properties.getName();
-        if (hHe >= 10) {
+        if (Integer.valueOf(h2) > 49) {
             properties.setHxy(0);
             properties.setHdy(properties.getHdy() + 1);
-            logger.info("后二和大于10 [ {} ] 不中", properties.getHdy());
+            logger.info("后二和大于49 [ {} ] ", properties.getHdy());
             if (properties.getHdy() == properties.gethMax()) {
-                MailSend.sendMail(name + "后二 和大于10" ,kjqh, "", toMails);
+                MailSend.sendMail(name + "后二 和大于49" ,kjqh, "", toMails);
             }
         }
 
-        if (hHe < 10) {
+        if (Integer.valueOf(h2) < 50) {
             properties.setHdy(0);
             properties.setHxy(properties.getHxy() + 1);
-            logger.info("后二和小于10 [ {} ] 不中", properties.getHxy());
+            logger.info("后二和小于50 [ {} ] ", properties.getHxy());
             if (properties.getHxy() == properties.gethMax()) {
-                MailSend.sendMail(name + "后二 和小于10" ,kjqh, "", toMails);
+                MailSend.sendMail(name + "后二 和小于50" ,kjqh, "", toMails);
             }
         }
 
-        if (qHe >= 10) {
+        if (Integer.valueOf(q2) > 49) {
             properties.setQxy(0);
             properties.setQdy(properties.getQdy() + 1);
-            logger.info("前二和大于10 [ {} ] 不中", properties.getQdy());
+            logger.info("前二和大于49 [ {} ] ", properties.getQdy());
             if (properties.getQdy() == properties.gethMax()) {
-                MailSend.sendMail(name + "前二 和大于10" ,kjqh, "", toMails);
+                MailSend.sendMail(name + "前二 和大于49" ,kjqh, "", toMails);
             }
         }
 
-        if (qHe < 10) {
+        if (Integer.valueOf(q2) < 50) {
             properties.setQdy(0);
             properties.setQxy(properties.getQxy() + 1);
-            logger.info("前二和小于10 [ {} ] 不中", properties.getQxy());
+            logger.info("前二和小于50 [ {} ] ", properties.getQxy());
             if (properties.getQxy() == properties.gethMax()) {
-                MailSend.sendMail(name + "前二 和小于10" ,kjqh, "", toMails);
+                MailSend.sendMail(name + "前二 和小于50" ,kjqh, "", toMails);
             }
         }
     }

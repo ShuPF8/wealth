@@ -111,7 +111,7 @@ public class TmallApplicationTests {
             }
 
             long time = System.currentTimeMillis();
-            if (properties.getHdy() > 4 || properties.getHxy() > 4 || properties.getQdy() > 4 || properties.getQxy() > 4) { //记录连续四次不中的的日志
+            if (properties.getHdy() > 7 || properties.getHxy() > 7 || properties.getQdy() > 7 || properties.getQxy() > 7) { //记录连续四次不中的的日志
                 properties.setPrevWireTime(time);
                 properties.setPrevHMaxBuCount(properties.gethMaxbzCount());
                 properties.setPrevHMaxLzCount(properties.gethMaxlzCount());

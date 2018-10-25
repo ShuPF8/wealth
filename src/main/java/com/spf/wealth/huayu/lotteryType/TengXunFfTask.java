@@ -34,9 +34,9 @@ public class TengXunFfTask extends TmallApplicationTests {
         map.put("id","16"); //腾讯
         map.put("pnum","30");
 
-        int q_bz_num = 8;
-        int h_bz_num = 8;
-        int nextqh = 687;
+        int q_bz_num = 7;
+        int h_bz_num = 7;
+        int nextqh = 897;
         if (nextqh == 1441) {
             nextqh = 1;
         }

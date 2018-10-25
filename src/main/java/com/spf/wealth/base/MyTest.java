@@ -1,5 +1,6 @@
 package com.spf.wealth.base;
 
+import com.spf.utils.mail.MailSend;
 import com.spf.wealth.model.LotteryDetail;
 import com.spf.wealth.model.LotteryHeDetail;
 import com.spf.wealth.service.ILotteryDetailService;
@@ -29,6 +30,11 @@ public class MyTest extends TmallApplicationTests {
         System.out.println(heDetail);
     }
 
-
+    @Test
+    public void mailTest() throws Exception {
+        String[] toMails = new String[]{"517292069@qq.com"};
+        System.out.println("55555");
+        MailSend.sendMail("测试后二 和大于49" ,"", "", toMails);
+    }
 
 }
