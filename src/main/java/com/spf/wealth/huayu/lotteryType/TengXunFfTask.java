@@ -12,6 +12,8 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Test;
+
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -34,16 +36,17 @@ public class TengXunFfTask extends TmallApplicationTests {
         map.put("id","16"); //腾讯
         map.put("pnum","30");
 
-        int q_bz_num = 7;
-        int h_bz_num = 7;
-        int nextqh = 897;
+        int q_bz_num = 8;
+        int h_bz_num = 8;
+        int nextqh = 613;
         if (nextqh == 1441) {
             nextqh = 1;
         }
 
         int finalNextqh = nextqh;
         List<Properties> list = new ArrayList<Properties>(){{
-            add(new Properties("腾讯分分", ThirteenNum66, finalNextqh, h_bz_num, q_bz_num,"Q 和9 13 夸2 胆12345678", client, map));
+            add(new Properties("腾讯分分", "dy", BigDecimal.valueOf(1.5), finalNextqh, client, map));
+//            add(new Properties("腾讯分分", ThirteenNum66, finalNextqh, h_bz_num, q_bz_num,"Q 和9 13 夸2 胆12345678", client, map));
 //            add(new Properties("腾讯分分", EightNum66, finalNextqh,h_bz_num, q_bz_num,"Q 和8 10 跨0 定0 胆012345679", client, map));
 //            add(new Properties("腾讯分分", ElevenNum66, finalNextqh, h_bz_num, q_bz_num,"Q 和11 夸1 胆23456789 定6", client, map));
 //            add(new Properties("腾讯分分", SevenNum66, finalNextqh, h_bz_num, q_bz_num,"Q 和7 夸3 定2 胆1245689", client, map));

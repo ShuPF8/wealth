@@ -12,6 +12,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.logging.log4j.Logger;
 import org.junit.Test;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -26,6 +27,9 @@ public class LotteryCore {
 
     private String[] toMails = new String[]{"517292069@qq.com"};
              //: new String[]{"1215852831@qq.com"};
+
+    private int[] bs = new int[]{1, 1, 2, 4, 8, 16, 32};
+
 
     public LotteryCore(CloseableHttpClient client, String url, Logger logger) {
         try {
@@ -255,7 +259,7 @@ public class LotteryCore {
         }
 
         properties.setNextqh(qh + 1);
-        this.heCommon(properties,kjxn, kjqh, count, logger);
+        this.zjCount(properties,kjxn, kjqh, count, logger);
 
         return true;
     }
@@ -279,11 +283,11 @@ public class LotteryCore {
         if (nextqh - qh == 1) { //是上一期
             Thread.sleep(5000);
             json = query(properties, logger); //重新查询
-            return dataHandle(json, properties,count, logger);
+            return dataHandleHe2(json, properties,count, logger);
         }
 
         properties.setNextqh(qh + 1);
-        this.heCommon(properties,kjxn, kjqh, count, logger);
+        this.zjCount(properties,kjxn, kjqh, count, logger);
 
         return true;
     }
@@ -338,6 +342,92 @@ public class LotteryCore {
                 MailSend.sendMail(name + "前二 和小于50" ,kjqh, "", toMails);
             }
         }
+    }
+
+
+    private void zjCount(Properties properties, String kjxn, String kjqh, int count, Logger logger) throws Exception {
+        String q2 = kjxn.substring(0,2);
+        String h2 = kjxn.substring(3,kjxn.length());
+
+        if (count == 1) {
+            logger.info("------------------------------ "+ properties.getName() +"开奖信息为:" + kjqh + " [" + kjxn + "]\n");
+        }
+
+        String qtj = properties.getQtj();
+        if ("dy".equals(qtj)) {
+            if (Integer.valueOf(q2) > 49) {
+                properties.setQbs(bs[properties.getQcount() % 5]);
+                properties.setqAccountAmount(properties.getqAccountAmount().add(properties.getAmount().multiply(BigDecimal.valueOf(properties.getQbs()))));
+                properties.setQzjcs(properties.getQzjcs() + 1);
+                properties.setQcount(0);
+            } else {
+                properties.setQbs(bs[properties.getQcount() % 5]);
+                properties.setqAccountAmount(properties.getqAccountAmount().subtract(properties.getAmount().multiply(BigDecimal.valueOf(properties.getQbs()))));
+                properties.setQbzcs(properties.getQbzcs() + 1);
+                properties.setQcount(properties.getQcount() + 1);
+                properties.setQtj("xy");
+            }
+        } else if ("xy".equals(qtj)) {
+            if (Integer.valueOf(q2) <= 49) {
+                properties.setQbs(bs[properties.getQcount() % 5]);
+                properties.setqAccountAmount(properties.getqAccountAmount().add(properties.getAmount().multiply(BigDecimal.valueOf(properties.getQbs()))));
+                properties.setQzjcs(properties.getQzjcs() + 1);
+                properties.setQcount(0);
+            } else {
+                properties.setQbs(bs[properties.getQcount() % 5]);
+                properties.setqAccountAmount(properties.getqAccountAmount().subtract(properties.getAmount().multiply(BigDecimal.valueOf(properties.getQbs()))));
+                properties.setQbzcs(properties.getQbzcs() + 1);
+                properties.setQcount(properties.getQcount() + 1);
+                properties.setQtj("dy");
+            }
+        }
+
+        String htj = properties.getHtj();
+        if ("dy".equals(htj)) {
+            if (Integer.valueOf(h2) > 49) {
+                properties.setHbs(bs[properties.getHcount() % 5]);
+                properties.sethAccountAmount(properties.gethAccountAmount().add(properties.getAmount().multiply(BigDecimal.valueOf(properties.getHbs()))));
+                properties.setHcount(0);
+                properties.setHzjcs(properties.getHzjcs() + 1);
+            } else {
+                properties.setHbs(bs[properties.getHcount() % 5]);
+                properties.sethAccountAmount(properties.gethAccountAmount().subtract(properties.getAmount().multiply(BigDecimal.valueOf(properties.getHbs()))));
+                properties.setHcount(properties.getHcount() + 1);
+                properties.setHbzcs(properties.getHbzcs() + 1);
+                properties.setHtj("xy");
+            }
+        } else if ("xy".equals(htj)) {
+            if (Integer.valueOf(h2) <= 49) {
+                properties.setHbs(bs[properties.getHcount() % 5]);
+                properties.sethAccountAmount(properties.gethAccountAmount().add(properties.getAmount().multiply(BigDecimal.valueOf(properties.getHbs()))));
+                properties.setHcount(0);
+                properties.setHzjcs(properties.getHzjcs() + 1);
+            } else {
+                properties.setHbs(bs[properties.getHcount() % 5]);
+                properties.sethAccountAmount(properties.gethAccountAmount().subtract(properties.getAmount().multiply(BigDecimal.valueOf(properties.getHbs()))));
+                properties.setHcount(properties.getHcount() + 1);
+                properties.setHbzcs(properties.getHbzcs() + 1);
+                properties.setHtj("dy");
+            }
+        }
+
+        if (properties.gethMaxbzCount() == 0 || properties.getHcount() > properties.gethMaxbzCount()) {
+            properties.sethMaxbzCount(properties.getHcount());
+        }
+
+        if (properties.getqMaxbzCount() == 0 || properties.getQcount() > properties.getqMaxbzCount()) {
+            properties.setqMaxbzCount(properties.getQcount());
+        }
+
+        int z = properties.getHzjcs();
+        int b = properties.getHbzcs();
+        logger.info("选号：{}，后二中 [ {} ] 次，不中 [ {} ], 连续不中次数：{}，当前倍数：{}， 最大不中次数：{}， 收益：{}",
+                htj ,z, b,properties.getHcount(),properties.getHbs(), properties.gethMaxbzCount(), properties.gethAccountAmount());
+
+        z = properties.getQzjcs();
+        b = properties.getQbzcs();
+        logger.info("选号：{}，前二中 [ {} ] 次，不中 [ {} ], 连续不中次数：{}，当前倍数：{}， 最大不中次数：{}，收益：{}",
+                qtj ,z, b,properties.getQcount(),properties.getQbs(), properties.getqMaxbzCount(), properties.getqAccountAmount());
     }
 
 }

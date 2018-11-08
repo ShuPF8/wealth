@@ -2,6 +2,7 @@ package com.spf.wealth.utils;
 
 import org.apache.http.impl.client.CloseableHttpClient;
 
+import java.math.BigDecimal;
 import java.util.Map;
 
 /**
@@ -56,19 +57,33 @@ public class Properties {
 
     private int qxy = 0;
 
+    private int qzjcs = 0; // 中奖次数
+
+    private int qbzcs = 0; // 不中次数
+
+    private String qtj = "dy";
+
+    private int qbs = 1; // 倍数
+
+    private BigDecimal qAccountAmount = BigDecimal.ZERO;
+
+    private BigDecimal amount; //投注金额
+
+    private int hzjcs = 0; // 中奖次数
+
+    private int hbzcs = 0; // 不中次数
+
+    private int hbs = 1; //后倍数
+
+    private String htj = "dy";
+
+    private BigDecimal hAccountAmount = BigDecimal.ZERO;
+
+    private BigDecimal commonAccountAmount = BigDecimal.ZERO; // 前后一起账户金额
+
     private CloseableHttpClient client;
     private Map<String, Object> params;
 
-
-    public Properties(String name, String myNum, Integer nextqh, int hMax, int qMax, String shtj, CloseableHttpClient client) {
-        this.name = name;
-        this.myNum = myNum;
-        this.nextqh = nextqh;
-        this.hMax = hMax;
-        this.qMax = qMax;
-        this.shtj = shtj;
-        this.client = client;
-    }
 
     public Properties(String name, String myNum, Integer nextqh, int hMax, int qMax, String shtj, CloseableHttpClient client, Map<String, Object> params) {
         this.name = name;
@@ -77,6 +92,26 @@ public class Properties {
         this.hMax = hMax;
         this.qMax = qMax;
         this.shtj = shtj;
+        this.client = client;
+        this.params = params;
+    }
+
+    public Properties(String name, String shtj, BigDecimal amount, int nextqh, CloseableHttpClient client, Map<String, Object> params) {
+        this.name = name;
+        this.shtj = shtj;
+        this.amount = amount;
+        this.nextqh = nextqh;
+        this.client = client;
+        this.params = params;
+    }
+
+    public Properties(String name, String shtj, BigDecimal amount,String qtj,String htj, int nextqh, CloseableHttpClient client, Map<String, Object> params) {
+        this.name = name;
+        this.shtj = shtj;
+        this.amount = amount;
+        this.qtj = qtj;
+        this.htj = htj;
+        this.nextqh = nextqh;
         this.client = client;
         this.params = params;
     }
@@ -279,5 +314,101 @@ public class Properties {
 
     public void setQxy(int qxy) {
         this.qxy = qxy;
+    }
+
+    public int getQzjcs() {
+        return qzjcs;
+    }
+
+    public void setQzjcs(int qzjcs) {
+        this.qzjcs = qzjcs;
+    }
+
+    public int getQbzcs() {
+        return qbzcs;
+    }
+
+    public void setQbzcs(int qbzcs) {
+        this.qbzcs = qbzcs;
+    }
+
+    public int getHzjcs() {
+        return hzjcs;
+    }
+
+    public void setHzjcs(int hzjcs) {
+        this.hzjcs = hzjcs;
+    }
+
+    public int getHbzcs() {
+        return hbzcs;
+    }
+
+    public void setHbzcs(int hbzcs) {
+        this.hbzcs = hbzcs;
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
+    }
+
+    public String getQtj() {
+        return qtj;
+    }
+
+    public void setQtj(String qtj) {
+        this.qtj = qtj;
+    }
+
+    public String getHtj() {
+        return htj;
+    }
+
+    public void setHtj(String htj) {
+        this.htj = htj;
+    }
+
+    public int getQbs() {
+        return qbs;
+    }
+
+    public void setQbs(int qbs) {
+        this.qbs = qbs;
+    }
+
+    public int getHbs() {
+        return hbs;
+    }
+
+    public void setHbs(int hbs) {
+        this.hbs = hbs;
+    }
+
+    public BigDecimal getqAccountAmount() {
+        return qAccountAmount;
+    }
+
+    public void setqAccountAmount(BigDecimal qAccountAmount) {
+        this.qAccountAmount = qAccountAmount;
+    }
+
+    public BigDecimal gethAccountAmount() {
+        return hAccountAmount;
+    }
+
+    public void sethAccountAmount(BigDecimal hAccountAmount) {
+        this.hAccountAmount = hAccountAmount;
+    }
+
+    public BigDecimal getCommonAccountAmount() {
+        return commonAccountAmount;
+    }
+
+    public void setCommonAccountAmount(BigDecimal commonAccountAmount) {
+        this.commonAccountAmount = commonAccountAmount;
     }
 }
