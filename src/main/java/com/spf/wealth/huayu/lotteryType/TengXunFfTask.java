@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.spf.utils.HttpUtil;
 import com.spf.wealth.base.TmallApplicationTests;
 import com.spf.wealth.huayu.LotteryCore;
+import com.spf.wealth.model.DwdModel;
 import com.spf.wealth.model.LotteryDetail;
 import com.spf.wealth.utils.LotteryUtil;
 import com.spf.wealth.utils.Properties;
@@ -38,12 +39,13 @@ public class TengXunFfTask extends TmallApplicationTests {
 
         int q_bz_num = 8;
         int h_bz_num = 8;
-        int nextqh = 613;
+        int nextqh = 982;
         if (nextqh == 1441) {
             nextqh = 1;
         }
 
         int finalNextqh = nextqh;
+        Properties properties = new Properties("腾讯分分", "dy", BigDecimal.valueOf(1.5), finalNextqh, client, map);
         List<Properties> list = new ArrayList<Properties>(){{
             add(new Properties("腾讯分分", "dy", BigDecimal.valueOf(1.5), finalNextqh, client, map));
 //            add(new Properties("腾讯分分", ThirteenNum66, finalNextqh, h_bz_num, q_bz_num,"Q 和9 13 夸2 胆12345678", client, map));
@@ -55,13 +57,14 @@ public class TengXunFfTask extends TmallApplicationTests {
 //            add(new Properties("腾讯分分", Twelve2Num66, finalNextqh, h_bz_num, q_bz_num,"W 和12 跨0 1", client, map));
 //            add(new Properties("腾讯分分", FourNum66, finalNextqh, h_bz_num,  q_bz_num,"W 和4 14 跨1 胆1235689", client, map));
         }};
-
+        DwdModel dwdModel = new DwdModel("594182");
         while (true) {
             long start = System.currentTimeMillis();
 
-            login(lotteryCore,list.get(0), nextqh); //数据查询
+            login(lotteryCore,properties, properties.getNextqh()); //数据查询
             //LotteryUtil.dataHandle(list, lotteryCore, json, path, "tengxun", logger); // 数据处理
-            super.dataHandleHe(json, list,lotteryCore, 1, logger); // 数据处理
+            //super.dataHandleHe(json, list,lotteryCore, 1, logger); // 数据处理
+            lotteryCore.dataHandDwd(json, properties, dwdModel, 1, logger);
 
             nextqh++;
             logger.info("--------------------------------------- 执行结束 {}----------------------------------------\n", _sdf.format(new Date()));
@@ -81,12 +84,17 @@ public class TengXunFfTask extends TmallApplicationTests {
 
     private void login(LotteryCore lotteryCore, Properties properties, int nextqh) throws Exception {
         Integer qh = 0;
+        int count = 0;
         do {
+            count++;
             Thread.sleep(3000);
             json = lotteryCore.query(properties, logger);
             JSONArray datas = json.getJSONArray("data");
             String kjqh = datas.getJSONArray(datas.size() - 1).getString(0);
             qh = Integer.valueOf(kjqh.split("-")[1]);
+            if (count == 10) {
+                throw new Exception("超时");
+            }
         } while (nextqh - qh != 0);
 
     }
