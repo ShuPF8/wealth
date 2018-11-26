@@ -362,6 +362,23 @@ public class LotteryHandleUtil {
             }
         });
 
+        int count = 0;
+        for (Map.Entry<Integer, Integer> entry : list) {
+            if (entry.getValue() == 0) {
+                count++;
+            }
+        }
+
+        if ((9-count) > dwdModel.getHeNum()) {
+            for (int i = 0; i < count; i++) {
+                list.remove(0);
+            }
+        } else {
+            for (int i = 0; i < count - 1; i++) {
+                list.remove(0);
+            }
+        }
+
         for (int i = 0; i < dwdModel.getHeNum(); i++) {
             Map.Entry<Integer, Integer> entry = list.get(i);
             resultStr += entry.getKey() + ",";
