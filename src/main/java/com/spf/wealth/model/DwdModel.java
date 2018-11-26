@@ -20,11 +20,91 @@ public class DwdModel {
 
     private  int maxBuCount = 0; //最大不中
 
-    private int buCount = 0; // 不中
+    private int buCount = 0; // 连续不中
 
-    private int zjCount = 0; //中奖次数
+    private int zjCount = 0; //总中奖次数
 
-    private int notZjCount = 0; //
+    private int notZjCount = 0; // 总不中次数
+
+    private String kjxx;
+
+    private int isZd;
+
+    private boolean isXh; //是否时时筛选
+
+    private int rmCount = 18; //热码期数 20期
+
+    private int heNum = 2; //和值个数 默认2
+
+    private int qhLocation = 5; //前二 1 后二5
+
+    private int btZjCount = 0; // 倍投中奖次数
+
+    private int btBzCount = 0; //倍投不中次数
+
+    public int getBtZjCount() {
+        return btZjCount;
+    }
+
+    public void setBtZjCount(int btZjCount) {
+        this.btZjCount = btZjCount;
+    }
+
+    public int getBtBzCount() {
+        return btBzCount;
+    }
+
+    public void setBtBzCount(int btBzCount) {
+        this.btBzCount = btBzCount;
+    }
+
+    public String getKjxx() {
+        return kjxx;
+    }
+
+    public void setKjxx(String kjxx) {
+        this.kjxx = kjxx;
+    }
+
+    public int getIsZd() {
+        return isZd;
+    }
+
+    public void setIsZd(int isZd) {
+        this.isZd = isZd;
+    }
+
+    public boolean isXh() {
+        return isXh;
+    }
+
+    public void setXh(boolean xh) {
+        isXh = xh;
+    }
+
+    public int getRmCount() {
+        return rmCount;
+    }
+
+    public void setRmCount(int rmCount) {
+        this.rmCount = rmCount;
+    }
+
+    public int getHeNum() {
+        return heNum;
+    }
+
+    public void setHeNum(int heNum) {
+        this.heNum = heNum;
+    }
+
+    public int getQhLocation() {
+        return qhLocation;
+    }
+
+    public void setQhLocation(int qhLocation) {
+        this.qhLocation = qhLocation;
+    }
 
     public int getNotZjCount() {
         return notZjCount;

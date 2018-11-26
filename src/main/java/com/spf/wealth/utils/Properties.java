@@ -75,6 +75,16 @@ public class Properties {
 
     private int hbs = 1; //后倍数
 
+    private int qs= 0;//投注期数
+
+    public int getQs() {
+        return qs;
+    }
+
+    public void setQs(int qs) {
+        this.qs = qs;
+    }
+
     private String htj = "dy";
 
     private BigDecimal hAccountAmount = BigDecimal.ZERO;

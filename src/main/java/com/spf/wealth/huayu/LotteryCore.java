@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.spf.utils.HttpUtil;
 import com.spf.utils.mail.MailSend;
 import com.spf.wealth.model.DwdModel;
+import com.spf.wealth.utils.LotteryHandleUtil;
 import com.spf.wealth.utils.Properties;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpUriRequest;
@@ -29,7 +30,7 @@ public class LotteryCore {
     private String[] toMails = new String[]{"517292069@qq.com"};
              //: new String[]{"1215852831@qq.com"};
 
-    private int[] bs = new int[]{1, 1, 2, 4, 8, 16, 32};
+    private int[] bs = new int[]{1,2,6,18,54,162};
 
 
     public LotteryCore(CloseableHttpClient client, String url, Logger logger) {
@@ -338,6 +339,68 @@ public class LotteryCore {
         return true;
     }
 
+    public boolean brainPowerDoNumHandle(JSONObject json, Properties properties, DwdModel dwdModel, Logger logger) throws Exception {
+        JSONArray datas = json.getJSONArray("data");
+        String kjqh = datas.getJSONArray(datas.size() - 1).getString(0);
+        Integer qh = Integer.valueOf(kjqh.split("-")[1]);
+        String kjxn = datas.getJSONArray(datas.size() - 1).getString(1);
+
+        int nextqh = properties.getNextqh();
+        if (nextqh - qh == 1) { //是上一期
+            Thread.sleep(5000);
+            json = query(properties, logger); //重新查询
+            return brainPowerDoNumHandle(json, properties, dwdModel, logger);
+        }
+
+        properties.setQs(properties.getQs() + 1);
+        properties.setNextqh(qh + 1);
+        String q2 = kjxn.substring(0,2);
+        String h2 = kjxn.substring(3,kjxn.length());
+
+        boolean isZj = true; // 是否中奖
+        if (dwdModel.getQhLocation() == 5) { //后二
+            if (!dwdModel.getTzNum().contains(h2)) {
+                isZj = false;
+            }
+        } else {
+            if (!dwdModel.getTzNum().contains(q2)) {
+                isZj = false;
+            }
+        }
+
+        int dqbs = properties.getHbs();
+        if (!isZj) {
+            String newTzNum = LotteryHandleUtil.brainPowerDoNum(datas, dwdModel);
+            dwdModel.setTzNum(newTzNum);
+            dwdModel.setBuCount(dwdModel.getBuCount() + 1);
+            dwdModel.setBtBzCount(dwdModel.getBtBzCount() + properties.getHbs());
+            dwdModel.setNotZjCount(dwdModel.getNotZjCount() + 1);
+            properties.setHbs(bs[(dwdModel.getBuCount() > 4 ? 4 : dwdModel.getBuCount())]);
+            dwdModel.setLzCount(0);
+            if (dwdModel.getMaxBuCount() < dwdModel.getBuCount()) {
+                dwdModel.setMaxBuCount(dwdModel.getBuCount());
+            }
+        } else {
+            dwdModel.setBtZjCount(dwdModel.getBtZjCount() + properties.getHbs());
+            dwdModel.setZjCount(dwdModel.getZjCount() + 1);
+            dwdModel.setLzCount(dwdModel.getLzCount() + 1);
+            properties.setHbs(1);
+            dwdModel.setBuCount(0);
+            if (dwdModel.getMaxLzCount() < dwdModel.getLzCount()) {
+                dwdModel.setMaxLzCount(dwdModel.getLzCount());
+            }
+        }
+
+        logger.info("\n\n\n");
+        logger.info("------------------------------ "+ properties.getName() +"开奖信息为:" + kjqh + " [" + kjxn + "]");
+        logger.info("投注号码：" + dwdModel.getTzNum());
+        logger.info("数据统计： 总投注：[ "+properties.getQs()+ "期 ], 连中次数：" + dwdModel.getLzCount() + ", 不中次数：" + dwdModel.getBuCount() + "， 最大连中：" +dwdModel.getMaxLzCount() + ", 最大不中：" + dwdModel.getMaxBuCount());
+        logger.info("倍投数据统计: 当前倍数： [ "+dqbs+ "倍 ], 中奖次数：[ " + dwdModel.getBtZjCount() + " ]，不中次数：[ " + dwdModel.getBtBzCount() + " ]");
+        logger.info("平刷数据统计: 中奖次数：[ " + dwdModel.getZjCount() + " ]，不中次数：[ " + dwdModel.getNotZjCount() + " ]");
+
+        return true;
+    }
+
     private void heCommon(Properties properties, String kjxn, String kjqh, int count, Logger logger) throws Exception {
         String q2 = kjxn.substring(0,2);
         int q_first = Integer.valueOf(q2.substring(0,1));
@@ -484,9 +547,13 @@ public class LotteryCore {
     private void dwd(JSONArray datas,DwdModel dwdModel, int next) {
         int size =datas.size() - 1;
         Map<Integer, Integer> map = new HashMap<>();
-        for (int i = size; i >= 10; i-- ) { //从20期中选热码
+        Integer dqNum = null;
+        for (int i = size; i >= 15; i-- ) { //从15期中选热码
             String kjNum = datas.getJSONArray(i).getString(1);
             int dwNum =Integer.valueOf(kjNum.substring(dwdModel.getLocation() - 1, dwdModel.getLocation()));
+            if (i == 29) {
+                dqNum = dwNum;
+            }
             switch (dwNum) {
                 case 0:
                     map.put(0, map.get(0) == null ? 1 : map.get(0) + 1);
@@ -530,16 +597,49 @@ public class LotteryCore {
 
         });
 
+        List<Integer> ji = new ArrayList<>();
+        List<Integer> ou = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            Map.Entry<Integer, Integer> entry = list.get(i);
+            Integer key = entry.getKey();
+            if (key % 2 == 0) {
+                ou.add(key);
+            } else  {
+                ji.add(key);
+            }
+        }
+
         List<Integer> list1 = new ArrayList<>();
         int length = dwdModel.getLength();
-        if (list.size() > length) {
-            for (int i = 0; i < length; i++) {
-                Map.Entry<Integer, Integer> entry = list.get(i);
-                list1.add(entry.getKey());
+        int num = length / 2;
+        if (dwdModel.getLength() % 2 == 0) {
+            if (ji.size() >= num && ou.size() >= num) {
+                for (int i = 0; i < num; i++) {
+                    list1.add(ji.get(i));
+                    list1.add(ou.get(i));
+                }
+            } else {
+                if (list.size() > length) {
+                    for (int i = 0; i < length; i++) {
+                        Map.Entry<Integer, Integer> entry = list.get(i);
+                        list1.add(entry.getKey());
+                    }
+                } else {
+                    for (Map.Entry<Integer, Integer> entry : list) {
+                        list1.add(entry.getKey());
+                    }
+                }
             }
         } else {
-            for (Map.Entry<Integer, Integer> entry : list) {
-                list1.add(entry.getKey());
+            if (list.size() > length) {
+                for (int i = 0; i < length; i++) {
+                    Map.Entry<Integer, Integer> entry = list.get(i);
+                    list1.add(entry.getKey());
+                }
+            } else {
+                for (Map.Entry<Integer, Integer> entry : list) {
+                    list1.add(entry.getKey());
+                }
             }
         }
 

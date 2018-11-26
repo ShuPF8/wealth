@@ -39,7 +39,7 @@ public class TengXunFfTask extends TmallApplicationTests {
 
         int q_bz_num = 8;
         int h_bz_num = 8;
-        int nextqh = 982;
+        int nextqh = 903;
         if (nextqh == 1441) {
             nextqh = 1;
         }
@@ -57,14 +57,15 @@ public class TengXunFfTask extends TmallApplicationTests {
 //            add(new Properties("腾讯分分", Twelve2Num66, finalNextqh, h_bz_num, q_bz_num,"W 和12 跨0 1", client, map));
 //            add(new Properties("腾讯分分", FourNum66, finalNextqh, h_bz_num,  q_bz_num,"W 和4 14 跨1 胆1235689", client, map));
         }};
-        DwdModel dwdModel = new DwdModel("594182");
+        DwdModel dwdModel = new DwdModel("01 02 03 04 05 07 08 10 12 13 14 16 17 19 20 21 25 26 29 30 31 34 35 39 40 41 43 46 47 48 49 50 52 53 56 57 58 59 61 62 64 65 67 68 69 70 71 74 75 76 79 80 84 85 86 89 91 92 93 94 95 96 97 98");
+        dwdModel.setLength(6);
         while (true) {
             long start = System.currentTimeMillis();
 
             login(lotteryCore,properties, properties.getNextqh()); //数据查询
             //LotteryUtil.dataHandle(list, lotteryCore, json, path, "tengxun", logger); // 数据处理
             //super.dataHandleHe(json, list,lotteryCore, 1, logger); // 数据处理
-            lotteryCore.dataHandDwd(json, properties, dwdModel, 1, logger);
+            lotteryCore.brainPowerDoNumHandle(json, properties, dwdModel,  logger);
 
             nextqh++;
             logger.info("--------------------------------------- 执行结束 {}----------------------------------------\n", _sdf.format(new Date()));
