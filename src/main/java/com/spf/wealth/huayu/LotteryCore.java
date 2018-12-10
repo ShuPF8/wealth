@@ -358,12 +358,13 @@ public class LotteryCore {
         String h2 = kjxn.substring(3,kjxn.length());
 
         boolean isZj = true; // 是否中奖
+        String tzNum = dwdModel.getTzNum();
         if (dwdModel.getQhLocation() == 5) { //后二
-            if (!dwdModel.getTzNum().contains(h2)) {
+            if (!tzNum.contains(h2)) {
                 isZj = false;
             }
         } else {
-            if (!dwdModel.getTzNum().contains(q2)) {
+            if (!tzNum.contains(q2)) {
                 isZj = false;
             }
         }
@@ -393,7 +394,7 @@ public class LotteryCore {
 
         logger.info("\n\n\n");
         logger.info("------------------------------ "+ properties.getName() +"开奖信息为:" + kjqh + " [" + kjxn + "]");
-        logger.info("投注号码：" + dwdModel.getTzNum());
+        logger.info("投注号码：" + tzNum);
         logger.info("数据统计： 总投注：[ "+properties.getQs()+ "期 ], 连中次数：" + dwdModel.getLzCount() + ", 不中次数：" + dwdModel.getBuCount() + "， 最大连中：" +dwdModel.getMaxLzCount() + ", 最大不中：" + dwdModel.getMaxBuCount());
         logger.info("倍投数据统计: 当前倍数： [ "+dqbs+ "倍 ], 中奖次数：[ " + dwdModel.getBtZjCount() + " ]，不中次数：[ " + dwdModel.getBtBzCount() + " ]");
         logger.info("平刷数据统计: 中奖次数：[ " + dwdModel.getZjCount() + " ]，不中次数：[ " + dwdModel.getNotZjCount() + " ]");
