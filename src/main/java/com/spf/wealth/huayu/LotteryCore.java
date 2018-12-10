@@ -30,7 +30,7 @@ public class LotteryCore {
     private String[] toMails = new String[]{"517292069@qq.com"};
              //: new String[]{"1215852831@qq.com"};
 
-    private int[] bs = new int[]{1,2,6,18,54,162};
+    private int[] bs = new int[]{1,1,2,4,8,16,32,64};
 
 
     public LotteryCore(CloseableHttpClient client, String url, Logger logger) {
@@ -376,7 +376,7 @@ public class LotteryCore {
             dwdModel.setBuCount(dwdModel.getBuCount() + 1);
             dwdModel.setBtBzCount(dwdModel.getBtBzCount() + properties.getHbs());
             dwdModel.setNotZjCount(dwdModel.getNotZjCount() + 1);
-            properties.setHbs(bs[(dwdModel.getBuCount() > 2 ? 1 : dwdModel.getBuCount())]);
+            properties.setHbs(bs[(dwdModel.getBuCount() > 7 ? 1 : dwdModel.getBuCount())]);
             dwdModel.setLzCount(0);
             if (dwdModel.getMaxBuCount() < dwdModel.getBuCount()) {
                 dwdModel.setMaxBuCount(dwdModel.getBuCount());
