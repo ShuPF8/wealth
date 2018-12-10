@@ -39,7 +39,7 @@ public class TengXunFfTask extends TmallApplicationTests {
 
         int q_bz_num = 8;
         int h_bz_num = 8;
-        int nextqh = 903;
+        int nextqh = 975;
         if (nextqh == 1441) {
             nextqh = 1;
         }

@@ -36,11 +36,31 @@ public class DwdModel {
 
     private int heNum = 2; //和值个数 默认2
 
+    private int dsNum = 1;
+
+    private int hwNum = 1;
+
     private int qhLocation = 5; //前二 1 后二5
 
     private int btZjCount = 0; // 倍投中奖次数
 
     private int btBzCount = 0; //倍投不中次数
+
+    public int getHwNum() {
+        return hwNum;
+    }
+
+    public void setHwNum(int hwNum) {
+        this.hwNum = hwNum;
+    }
+
+    public int getDsNum() {
+        return dsNum;
+    }
+
+    public void setDsNum(int dsNum) {
+        this.dsNum = dsNum;
+    }
 
     public int getBtZjCount() {
         return btZjCount;

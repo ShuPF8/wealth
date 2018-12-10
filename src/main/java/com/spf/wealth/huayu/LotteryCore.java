@@ -375,7 +375,7 @@ public class LotteryCore {
             dwdModel.setBuCount(dwdModel.getBuCount() + 1);
             dwdModel.setBtBzCount(dwdModel.getBtBzCount() + properties.getHbs());
             dwdModel.setNotZjCount(dwdModel.getNotZjCount() + 1);
-            properties.setHbs(bs[(dwdModel.getBuCount() > 4 ? 4 : dwdModel.getBuCount())]);
+            properties.setHbs(bs[(dwdModel.getBuCount() > 2 ? 1 : dwdModel.getBuCount())]);
             dwdModel.setLzCount(0);
             if (dwdModel.getMaxBuCount() < dwdModel.getBuCount()) {
                 dwdModel.setMaxBuCount(dwdModel.getBuCount());

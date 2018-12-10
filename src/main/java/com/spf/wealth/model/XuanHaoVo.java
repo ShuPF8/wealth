@@ -23,6 +23,8 @@ public class XuanHaoVo {
 
     private int twom = 1; //2 2码
 
+    private int qhLocation = 5; //前二 1 后二5
+
     public XuanHaoVo() {super();}
 
     public XuanHaoVo(String dm, String he, String kua) {
